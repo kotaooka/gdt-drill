@@ -564,6 +564,9 @@ body.onbopen{overflow:hidden}
 .sri summary{cursor:pointer;line-height:1.6}.sri .lbl,.srrow .lbl{margin-left:8px;font-size:.72rem}.sra{margin:6px 0 2px}.sra b{margin-right:8px;color:var(--ok)}
 .srrow{display:flex;justify-content:space-between;align-items:center;gap:10px;padding:8px 0;border-bottom:1px solid var(--line);line-height:1.5}
 mark{background:#ffe58a;color:#1c2033;border-radius:2px;padding:0 1px}.code{font-family:var(--f-num);letter-spacing:.08em;font-size:1.05em}
+.qstart{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}.qstart .tile{min-height:96px;padding:14px}.qstart .tile:first-child{grid-column:1/-1;min-height:72px}
+.qstart .tile .sub{font-size:.8rem;color:var(--muted)}
+details.dset{margin-top:14px}details.dset>summary,details.sylwrap>summary{cursor:pointer;font-weight:700;padding:4px 0;display:flex;flex-direction:column;gap:2px}
 </style>
 
 <header class="appbar">
@@ -884,7 +887,7 @@ const ICON={
 
 // ===== 画面 =====
 let view='home';
-let practiceSub='drill',resSub='res';   // 下部ナビの「演習」「資料」で前回開いていた画面
+let practiceSub='drill',resSub='tables';   // 下部ナビの「演習」「資料」で前回開いていた画面
 const drill={cats:new Set(Object.keys(CATS)),count:10,kind:'all'};
 let quiz=null;   // 演習セッション
 let mock=null;   // 実力診断のセッション
@@ -893,7 +896,7 @@ let lastSyl=null;
 let lastCardKey='';
 
 const NAV=[['home','ホーム'],['road','ロード'],['practice','演習'],['stats','成績'],['resg','資料']];
-const navKey=v=>v==='flash'?'home':v==='drill'||v==='mock'?'practice':v==='res'||v==='tables'||v==='formulas'||v==='lab'||v==='read'?'resg':v;
+const navKey=v=>v==='flash'?'home':v==='data'?'stats':v==='drill'||v==='mock'?'practice':v==='res'||v==='tables'||v==='formulas'||v==='lab'||v==='read'?'resg':v;
 function renderNav(){
   const k=navKey(view);
   $('#tabs .in').innerHTML=NAV.map(([id,l])=>`<button role="tab" data-nav="${id}" aria-selected="${k===id}"><span class="pill">${ICON[id==='resg'?'res':id]}</span>${l}</button>`).join('');
@@ -938,6 +941,7 @@ function render(){
   else if(view==='lab')m.innerHTML=subtabs('res')+labHTML();
   else if(view==='read')m.innerHTML=subtabs('res')+readerHTML();
   else if(view==='search')m.innerHTML=searchHTML();
+  else if(view==='data')m.innerHTML=dataHTML();
   else if(view==='flash'){m.innerHTML=flashHTML();if(FL&&!FL.done)flashTick();}
   if(quiz||mock)saveSession();
   // 次の問題に進んだときだけ、カードを右から滑り込ませる
@@ -948,7 +952,7 @@ function render(){
 }
 
 function subtabs(g){
-  const L=g==='practice'?[['drill','分野別演習'],['mock','実力診断']]:[['res','資料'],['tables','早見表'],['lab','動く図'],['read','枠を読む']];
+  const L=g==='practice'?[['drill','分野別演習'],['mock','実力診断']]:[['tables','早見表'],['read','枠を読む'],['lab','動く図'],['res','資料']];
   return `<div class="subtabs" role="tablist">${L.map(([v,l])=>`<button data-v2="${v}" aria-pressed="${view===v}">${l}</button>`).join('')}</div>`;
 }
 // 今日の目標の円グラフ（SVG）
@@ -992,13 +996,11 @@ function homeHTML(){
     ${dueIds().length?`<button class="lrow" ${cont.a}><span class="ic">${ICON.flag}</span><span><b>学習ロードの続き</b><span>${esc(cont.t)}</span></span>${ICON.chev}</button>`:''}
     ${(()=>{const m=markedItems(),n=m.filter(i=>i.kind!=='x').length+new Set(m.filter(i=>i.kind==='x').map(i=>i.set)).size;
       return n?`<button class="lrow" data-act="marks"><span class="ic">${ICON.star}</span><span><b>あとで見る</b><span>登録した${n}問（大問は1問と数える）</span></span>${ICON.chev}</button>`:'';})()}
-    <button class="lrow" data-act="quick"><span class="ic">${ICON.bolt}</span><span><b>全分野から10問</b><span>知識・計算をランダムに</span></span>${ICON.chev}</button>
-    <button class="lrow" data-act="dai"><span class="ic">${ICON.sheet}</span><span><b>図面を読む</b><span>部品図と公差記入枠を読む大問（穴埋め・正誤）</span></span>${ICON.chev}</button>
-    <button class="lrow" data-act="fcfb"><span class="ic">${ICON.tune}</span><span><b>記入枠を組む</b><span>指示したい内容から、記号・公差値・データムの順を選ぶ</span></span>${ICON.chev}</button>
-    <button class="lrow" data-act="chkb"><span class="ic">${ICON.flag}</span><span><b>検図</b><span>公差記入枠や図の誤りを見つけて直す</span></span>${ICON.chev}</button>
-    <button class="lrow" data-act="judge"><span class="ic">${ICON.check}</span><span><b>合否を判定する</b><span>測定結果の図を見て、合格・不合格を選ぶ</span></span>${ICON.chev}</button>
+    <button class="lrow" data-act="godrill"><span class="ic">${ICON.sheet}</span><span><b>種類を選んで解く</b><span>知識・計算・図面を読む・記入枠を組む・検図・合否判定</span></span>${ICON.chev}</button>
     <button class="lrow" data-act="flash"><span class="ic">${ICON.bolt}</span><span><b>記号フラッシュ</b><span>14の記号をタイムアタック${(P.flash||{}).best?`・自己ベスト ${P.flash.best.toFixed(1)} 秒`:''}</span></span>${ICON.chev}</button>
-    <button class="lrow" data-act="gomock"><span class="ic">${ICON.timer}</span><span><b>実力診断</b><span>全分野から約40問・弱い項目が分かる</span></span>${ICON.chev}</button>
+    ${(()=>{// 実力診断は、まだ受けていないか、前回から30日以上たったときだけ案内する
+      const d=P.mocks.filter(h=>h.f).slice(-1)[0],days=d?Math.floor((Date.now()-d.t)/864e5):null;
+      return d&&days<30?'':`<button class="lrow" data-act="gomock"><span class="ic">${ICON.timer}</span><span><b>${d?'そろそろ実力診断を':'実力診断を受ける'}</b><span>${d?`前回から ${days} 日。いまの弱い項目を確かめる`:'全分野から約40問・弱い項目が分かる'}</span></span>${ICON.chev}</button>`;})()}
   </div>
   <p class="status" style="margin-inline:4px">${store.mode==='cloud'?'進捗はアカウントに保存されます（別の端末でも続きから）。':'進捗はこの端末に保存されます。'}</p>`;
 }
@@ -1042,19 +1044,31 @@ function drillSetupHTML(){
   const grp=f=>Object.entries(CATS).filter(([k,c])=>c.field===f).map(([k,c])=>{const p=pct(acc[k].c,acc[k].n);return `<button class="chip" data-cat="${k}" aria-pressed="${drill.cats.has(k)}">${c.name}${p!=null?` <span style="font-family:var(--f-num);opacity:.7">${p}%</span>`:''}</button>`;}).join('');
   const seg=(key,vals)=>`<div class="seg">${vals.map(([v,l])=>`<button data-set="${key}" data-val="${v}" aria-pressed="${String(drill[key])===String(v)}">${l}</button>`).join('')}</div>`;
   const n=poolFor().length;
+  const qs=(act,ic,t,sub)=>`<button class="tile" data-act="${act}"><span class="ic">${ICON[ic]}</span><b>${t}</b><span class="sub">${sub}</span></button>`;
   return subtabs('practice')+`
-  <h2>分野を選ぶ</h2>
-  <div class="panel" style="display:grid;gap:14px">
+  <h2>すぐ始める</h2>
+  <div class="qstart">
+    ${qs('quick','bolt','全分野から10問','知識と計算をまぜて')}
+    ${qs('qk','star','知識','記号・用語・規格の違い')}
+    ${qs('qg','calc','計算','毎回数値が変わる')}
+    ${qs('dai','sheet','図面を読む','部品図の大問')}
+    ${qs('fcfb','tune','記入枠を組む','要求から枠を組む')}
+    ${qs('chkb','flag','検図','図面の誤りを直す')}
+    ${qs('judge','check','合否判定','測定値から判断')}
+  </div>
+  <details class="panel dset"${drill.open?' open':''}><summary>分野と種類を選んで解く</summary>
+  <h2 style="margin-top:8px">分野を選ぶ</h2>
+  <div style="display:grid;gap:14px">
     ${FIELDS.map(F=>`<div><div class="lbl">${esc(F.name)}</div><div class="chips" style="margin-top:6px">${grp(F.k)}</div></div>`).join('')}
     <div class="actions"><button class="btn ghost" data-act="allcats">すべて選択</button><button class="btn ghost" data-act="nocats">選択を解除</button></div>
   </div>
   <h2>出題の設定</h2>
-  <div class="panel" style="display:grid;gap:12px">
+  <div style="display:grid;gap:12px">
     <div><div class="lbl">問題の種類</div>${seg('kind',[['all','すべて'],['k','知識'],['g','計算'],['x','図面を読む'],['f','記入枠を組む'],['c','検図']])}</div>
     <div><div class="lbl">問題数</div>${seg('count',[[10,'10問'],[20,'20問'],[30,'30問']])}</div>
     <p class="note" style="margin:0">対象 ${n} 問（計算問題は毎回数値が変わります${'xfc'.includes(drill.kind)?'。大問は空欄の数だけ問題を数え、大問単位で出すため、問題数が少し増えることがあります':''}）</p>
     <div><button class="btn" data-act="startdrill" ${n?'':'disabled'}>演習を始める</button></div>
-  </div>`;
+  </div></details>`;
 }
 // 大問の種類：f＝公差記入枠を組む、c＝検図（chk:true）、x＝図面を読む（それ以外の大問）
 const xkOf=S=>S.type==='fcf'?'f':S.chk?'c':'x';
@@ -1139,8 +1153,8 @@ const firstOpen=(list,s,e)=>{for(let j=s;j<e;j++)if(list[j].pick==null)return j;
 // 大問カード：本文の空欄をタップして選び、下の選択肢で埋める。○×は文ごとに選ぶ
 function groupCard(list,s,e,act,reveal,inDrill){
   const items=list.slice(s,e),S=SETS[items[0].set],c=CATS[items[0].cat],ox=items[0].ox;
-  // 図を本文の上に置くもの：○×、小さい図（公差記入枠だけ）、図を見ながら答える問題（figTop）
-  const figTop=!!S.fig&&S.type!=='fcf'&&(ox||S.figTop||S.fig[0]==='fcf');
+  // 図は本文の上に置く（選択肢を選びながら図を見られるように）。記入枠を組む問題だけは、本文→図→枠の順
+  const figTop=!!S.fig&&S.type!=='fcf';
   const head=`<div class="qhead"><span class="tag">${c.field}｜${c.name}</span><span class="tag dai">${KLAB[xkOf(S)]}｜${esc(S.title)}</span></div>`;
   const nOk=items.filter(it=>it.pick===it.ans).length,filled=items.filter(it=>it.pick!=null).length;
   let body='';
@@ -1399,8 +1413,11 @@ function statsHTML(){
   <div class="kpis"><div class="panel kpi"><div class="lbl">今日の復習</div><div class="v" style="color:${sr.due?'var(--ucl)':'var(--ok)'}">${sr.due}<small>問</small></div></div><div class="panel kpi"><div class="lbl">明日</div><div class="v">${sr.tom}<small>問</small></div></div><div class="panel kpi"><div class="lbl">定着</div><div class="v" style="color:var(--ok)">${sr.firm}<small>問</small></div></div></div>
   <p class="note" style="margin-inline:4px">正解するたびに次の出題までの間隔が延びます（1日→3日→7日→…）。間違えると今日の復習に戻ります。間隔が21日以上になった問題を「定着」として数えています（学習中 ${sr.learn} 問）。</p>
   <h2>正答率の推移</h2><div class="panel chart">${trendSVG()}<p class="note">演習1回ごとの正答率を p 管理図の形で表示。中心線は全体の平均正答率、破線は ±3σ の管理限界（回ごとの問題数で変わる）。</p></div>
-  <h2>記録の管理</h2>
-  <div class="panel">${store.resetAsk?`<div class="confirm" style="margin-top:0">すべての解答記録と実力診断の履歴を消去します。元に戻せません。<div class="actions" style="margin-top:8px"><button class="btn danger" data-act="resetdo">消去する</button><button class="btn ghost" data-act="resetno">やめる</button></div></div>`:`<button class="btn danger" data-act="resetask">記録をリセット</button>`}</div>
+  <p class="note" style="margin:16px 4px"><button class="linkbtn" data-v2="data">記録の書き出し・読み込み・リセット、報告した誤り</button>（設定からも開けます）</p>`;
+}
+// 記録の管理：書き出し・読み込み・リセット・報告した誤りの一覧（設定と成績の下から開く）
+function dataHTML(){
+  return `<h2 style="margin-top:8px">記録の管理</h2>
   <h2>記録の書き出し・読み込み</h2>
   <div class="panel">
     <p class="note" style="margin-top:0">解答記録をテキスト（JSON）で書き出し、別の端末やアプリ版・Web版の間で移せます。読み込むと、いまの記録は読み込んだ内容で置き換わります。</p>
@@ -1409,7 +1426,9 @@ function statsHTML(){
     ${store.io==='imp'?`<textarea id="ioText" rows="5" placeholder="書き出したテキストを貼り付け"></textarea>${store.ioErr?`<p class="note" style="color:var(--ucl)">${esc(store.ioErr)}</p>`:''}<div class="actions"><button class="btn danger sm" data-act="impdo">置き換えて読み込む</button><button class="btn ghost sm" data-act="ioclose">やめる</button></div>`:''}
   </div>
   <h2>報告した誤り（${(P.reports||[]).length}件）</h2>
-  <div class="panel">${reportsHTML()}<textarea id="rpCopy" rows="4" hidden readonly></textarea></div>`;
+  <div class="panel">${reportsHTML()}<textarea id="rpCopy" rows="4" hidden readonly></textarea></div>
+  <h2>記録のリセット</h2>
+  <div class="panel">${store.resetAsk?`<div class="confirm" style="margin-top:0">すべての解答記録と実力診断の履歴を消去します。元に戻せません。<div class="actions" style="margin-top:8px"><button class="btn danger" data-act="resetdo">消去する</button><button class="btn ghost" data-act="resetno">やめる</button></div></div>`:`<button class="btn danger" data-act="resetask">記録をリセット</button>`}</div>`;
 }
 function trendSVG(){
   const s=P.sessions;if(s.length<2)return '<p class="empty">演習を2回以上行うと、正答率の推移が表示されます。</p>';
@@ -1454,20 +1473,14 @@ function resHTML(){
   const n={k:KB.length,g:Object.keys(G).length,x:ITEMS.filter(i=>i.kind==='x').length,s:DAI.length};
   const sec=RES_LINKS.map(g=>`<h2>${esc(g.h)}</h2>${g.note?`<p class="note" style="margin-top:0">${esc(g.note)}</p>`:''}<div class="panel links">${g.items.map(([t,u,d])=>`<div class="lnk">${A(t,u)}${d?`<span>${esc(d)}</span>`:''}</div>`).join('')}</div>`).join('');
   const refs=Object.entries(CATS).map(([k,c])=>`<div class="refrow" id="res-${k}"><div class="nm"><span class="lbl">${esc(c.field)}</span>${esc(c.name)}</div><div>${(REFS[k]||[]).length?REFS[k].map(([no,t])=>`<div><b class="jis">${esc(no)}</b> ${esc(t)}</div>`).join(''):'<div class="note" style="margin:0">対応する JIS はありません。レベル表と4級用テキストを参照してください。</div>'}</div></div>`).join('');
-  return `<h2>出題範囲との対応</h2>
-  <p class="note" style="margin-top:0">作成者が JIS の幾何公差関連規格をもとに決めた出題範囲（${SYL_VER}）の項目と、収録問題数・あなたの正答率です。「演習」でその項目だけを出題します。</p>
-  <div class="panel syl">${sylHTML()}</div>
+  return `<details class="panel sylwrap"><summary><b>出題範囲との対応</b><span class="note" style="margin:0">${SYLX.length}項目・項目ごとの問題数と正答率</span></summary>
+  <p class="note">作成者が JIS の幾何公差関連規格をもとに決めた出題範囲（${SYL_VER}）の項目と、収録問題数・あなたの正答率です。「演習」でその項目だけを出題します。</p>
+  <div class="syl">${sylHTML()}</div></details>
   ${sec}
   <h2>分野ごとの関連規格</h2>
   <div class="panel">${refs}</div>
   <p class="note">規格の番号と名称は作成者の知識に基づきます。改正されている場合があるので、JIS 検索で最新版を確認してください。</p>
-  <h2>このアプリについて</h2>
-  <div class="panel about">
-    <div class="ver-big">v${APP.version}<small>${APP.date} 更新</small></div>
-    <p>知識問題 ${n.k} 問、計算・判定問題 ${n.g} 種（毎回数値が変わる）、大問 ${n.s} 題（図面を読む・記入枠を組む・検図、空欄の合計 ${n.x} 問）。</p>
-    <p class="note">個人が作成した非公式の学習教材です。日本規格協会・ISO・ASME とは関係ありません。問題・解説・図はすべてオリジナルで、規格の本文や図は転載していません。規格の内容は、必ず原典（規格票）で確認してください。</p>
-    <p class="note">更新履歴は右上の「設定」で確認できます。</p>
-  </div>`;
+  <p class="note">このアプリの版・更新履歴・非公式であることの説明は、右上の「設定」にあります。</p>`;
 }
 // レベル表の大項目ごとに折りたたみ、項目ごとに問題数・正答率・演習ボタンを出す
 function sylHTML(){
@@ -1497,6 +1510,7 @@ $('#sheet').addEventListener('click',e=>{const b=e.target.closest('[data-tt]');i
 
 // ===== 操作 =====
 // 動く図のスライダー：入力欄は作り直さず、値の表示と図だけを書き換える
+$('#main').addEventListener('toggle',e=>{if(e.target.classList&&e.target.classList.contains('dset'))drill.open=e.target.open;},true);
 $('#main').addEventListener('input',e=>{const t=e.target;if(!t.dataset)return;
   if(t.dataset.rdin){RD[t.dataset.rdin]=t.value;const o=document.getElementById('rdout');if(o)o.innerHTML=rdOut();return;}
   if(t.dataset.srch){SR.q=t.value;const o=document.getElementById('srout');if(o)o.innerHTML=srOut();return;}
@@ -1547,6 +1561,9 @@ $('#main').addEventListener('click',e=>{
   if(d.mf){mock.filter=d.mf;render();return;}
   if(d.rpdel!=null){P.reports.splice(+d.rpdel,1);persist();render();return;}
   switch(d.act){
+    case 'godrill':practiceSub='drill';setView('drill');break;
+    case 'qk':startQuiz(buildList(ITEMS.filter(i=>i.kind==='k'),10,true),'知識 10問');break;
+    case 'qg':startQuiz(buildList(ITEMS.filter(i=>i.kind==='g'&&!G[i.id].judge),10,false),'計算 10問');break;
     case 'quick':startQuiz(mixReview(buildList(ITEMS.filter(i=>i.kind!=='x'),10,false),3),'全分野10問');break;
     case 'review':startReview();break;
     case 'marks':startMarks();break;
@@ -1858,8 +1875,12 @@ function settingsHTML(){
     ${allowed?`<div class="srow"><div class="t"><span>数分ほど遅れて届くことがあります。</span></div><button class="btn ghost sm" data-test-notify>テスト通知</button></div>`:`<div class="srow"><div class="t"><b style="color:var(--ucl)">通知が許可されていません</b><span>Android の「設定 → アプリ → 幾何公差ドリル → 通知」で許可してください。</span></div></div>`}`:''}`
     :`<div class="srow"><div class="t"><b>毎日のリマインダー</b><span>Android アプリ版で使えます。Web 版では通知を送れません。</span></div></div>`}
   </div>
+  <div class="setcard"><h3>記録</h3>
+    <div class="srow"><div class="t"><b>記録の管理</b><span>書き出し・読み込み（機種変更）、リセット、報告した誤りの一覧</span></div><button class="btn ghost sm" data-godata>開く</button></div>
+  </div>
   <div class="setcard"><h3>このアプリについて</h3>
-    <div class="srow"><div class="t"><b>はじめの案内</b><span>初回起動時の設定（受験日・目標・表示・通知）をもう一度行う</span></div><button class="btn ghost sm" data-reonb>表示する</button></div>
+    <div class="srow"><div class="t"><b>はじめの案内</b><span>初回起動時の設定（目標・表示・通知）をもう一度行う</span></div><button class="btn ghost sm" data-reonb>表示する</button></div>
+    <p class="note" style="margin:6px 0">知識問題 ${KB.length} 問、計算・判定問題 ${Object.keys(G).length} 種（毎回数値が変わる）、大問 ${DAI.length} 題。個人が作成した非公式の学習教材で、日本規格協会・ISO・ASME とは関係ありません。問題・解説・図はすべてオリジナルで、規格の本文や図は転載していません。</p>
     ${pwaRow()}
     <div class="srow"><div class="t"><b>バージョン</b><span>${APP.date} 更新</span></div><span class="ver-big" style="font-size:1.1rem">v${APP.version}</span></div>
     <div class="srow"><div class="t"><b>更新の確認</b><span id="updState">${updHTML()}</span></div><button class="btn ghost sm" data-upd>確認する</button></div>
@@ -1924,6 +1945,7 @@ $('#streakChip').addEventListener('click',()=>{sfx('tap');streakSheet();});
 $('#setClose').addEventListener('click',()=>{closeSheets();$('#setBtn').focus();});
 $('#setSheet').addEventListener('click',e=>{
   if(e.target.closest('[data-reonb]')){closeSheets();openOnb();return;}
+  if(e.target.closest('[data-godata]')){closeSheets();setView('data');return;}
   if(e.target.closest('[data-install]')){if(instEvt){const ev=instEvt;instEvt=null;ev.prompt();ev.userChoice.finally(()=>refreshSettings());}return;}
   if(e.target.closest('[data-upd]')){sfx('tap');if(upd.st!=='busy')checkUpdate();return;}
   if(e.target.closest('[data-reload]')){e.preventDefault();location.reload();return;}
