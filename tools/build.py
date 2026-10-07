@@ -23,7 +23,7 @@ OGIMG = "https://raw.githubusercontent.com/kotaooka/gdt-drill/main/screenshots/o
 META = (
     f'<meta name="description" content="{DESC}">'
     f'<link rel="canonical" href="{URL}">'
-    '<meta name="theme-color" content="#1D5C7A">'
+    '<meta name="theme-color" content="#3D4A9E">'
     # ホーム画面に追加（PWA）用：manifest・アイコン。Service Worker の登録は画面側（template.html）で行う
     '<link rel="manifest" href="manifest.webmanifest">'
     '<link rel="icon" type="image/png" sizes="32x32" href="icons/favicon-32.png">'

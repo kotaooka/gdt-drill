@@ -2,11 +2,11 @@
 <resources>
     <!-- ライトテーマ：WebView の prefers-color-scheme も light になる -->
     <style name="AppTheme" parent="android:Theme.Material.Light.NoActionBar">
-        <item name="android:statusBarColor">#F3F6F5</item>
+        <item name="android:statusBarColor">#F4F5F9</item>
         <item name="android:windowLightStatusBar">true</item>
-        <item name="android:navigationBarColor">#F3F6F5</item>
+        <item name="android:navigationBarColor">#F4F5F9</item>
         <item name="android:windowLightNavigationBar">true</item>
         <item name="android:windowBackground">@color/paper</item>
     </style>
-    <color name="paper">#F3F6F5</color>
+    <color name="paper">#F4F5F9</color>
 </resources>

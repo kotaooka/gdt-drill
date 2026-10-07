@@ -2,11 +2,11 @@
 <resources>
     <!-- 端末がダークモードのとき：WebView の prefers-color-scheme も dark になる -->
     <style name="AppTheme" parent="android:Theme.Material.NoActionBar">
-        <item name="android:statusBarColor">#10171B</item>
+        <item name="android:statusBarColor">#10121A</item>
         <item name="android:windowLightStatusBar">false</item>
-        <item name="android:navigationBarColor">#10171B</item>
+        <item name="android:navigationBarColor">#10121A</item>
         <item name="android:windowLightNavigationBar">false</item>
         <item name="android:windowBackground">@color/paper</item>
     </style>
-    <color name="paper">#10171B</color>
+    <color name="paper">#10121A</color>
 </resources>

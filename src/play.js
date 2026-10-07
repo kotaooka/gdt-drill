@@ -79,7 +79,7 @@ function diagCanvas(r,n,name){
   const weak=r.items.filter(o=>o.c<o.n).sort((a,b)=>a.c/a.n-b.c/b.n||b.n-a.n).slice(0,6);
   const code=mock&&mock.code,off=code?46:0,H=560+off+FIELDS.length*84+(weak.length?120+weak.length*52:0)+90;
   const cv=document.createElement('canvas');cv.width=W;cv.height=H;const g=cv.getContext('2d');
-  const C={bg:'#ffffff',ink:'#1c2830',muted:'#5b6c74',line:'#d3ddda',pri:'#1d5c7a',ok:'#276f43',ng:'#b3372a',soft:'#e2eef3'};
+  const C={bg:'#ffffff',ink:'#1c2033',muted:'#5d6378',line:'#d6d9e6',pri:'#3d4a9e',ok:'#276f43',ng:'#b3372a',soft:'#e6e8f6'};
   // mw を超える文字列は横に縮めて収める（長い氏名・項目名で右端が切れないように）
   const T=(t,x,y,sz,col,wt,al,mw)=>{g.font=`${wt||400} ${sz}px ${font}`;g.fillStyle=col||C.ink;g.textAlign=al||'left';mw?g.fillText(t,x,y,mw):g.fillText(t,x,y);};
   g.fillStyle=C.bg;g.fillRect(0,0,W,H);g.fillStyle=C.pri;g.fillRect(0,0,W,14);

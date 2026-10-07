@@ -3,7 +3,7 @@
 //   通信できるときは常に最新版が表示され、更新のたびにこのファイルを書き換える必要はない。
 // ・アイコンなどの小さなファイルは「保存済みを優先」。
 // ・別のサイトへの通信（更新の確認で使う GitHub の API など）には関与しない。
-const CACHE = 'gdt-drill-v1';
+const CACHE = 'gdt-drill-v2';
 const CORE = ['./', './index.html', './manifest.webmanifest', './icons/icon-192.png', './icons/icon-512.png', './icons/apple-touch-icon.png', './icons/favicon-32.png'];
 
 self.addEventListener('install', e => {

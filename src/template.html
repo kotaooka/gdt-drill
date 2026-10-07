@@ -2,18 +2,18 @@
 <style>
 /* レイアウト：方眼紙の地にマークシート型の解答欄。上部タブで5画面を切替える1カラムアプリ */
 :root{
-  --paper:#f3f6f5; --grid:rgba(29,92,122,.07); --card:#ffffff; --ink:#1c2830; --muted:#5b6c74; --line:#d3ddda;
-  --accent:#1d5c7a; --accent-soft:#e2eef3; --ucl:#b3372a; --ucl-soft:#f8e6e2; --ok:#276f43; --ok-soft:#e1f1e7; --warn:#a86a12;
+  --paper:#f4f5f9; --grid:rgba(61,74,158,.07); --card:#ffffff; --ink:#1c2033; --muted:#5d6378; --line:#d6d9e6;
+  --accent:#3d4a9e; --accent-soft:#e6e8f6; --ucl:#b3372a; --ucl-soft:#f8e6e2; --ok:#276f43; --ok-soft:#e1f1e7; --warn:#a86a12;
   --f-body:"Noto Sans JP","Noto Sans CJK JP","Hiragino Sans","Hiragino Kaku Gothic ProN","Yu Gothic UI","Yu Gothic",Meiryo,system-ui,sans-serif;
   --f-disp:var(--f-body);
   --f-num:var(--f-body);
 }
 @media (prefers-color-scheme: dark){:root:not([data-theme="light"]){
-  --paper:#10171b; --grid:rgba(111,179,210,.06); --card:#172126; --ink:#e2eaed; --muted:#93a5ac; --line:#2a3a41;
-  --accent:#72b6d6; --accent-soft:#1b3340; --ucl:#ef7b64; --ucl-soft:#3a201b; --ok:#6cc290; --ok-soft:#18332a; --warn:#e0a84a; color-scheme:dark}}
+  --paper:#10121a; --grid:rgba(154,166,240,.06); --card:#181b26; --ink:#e4e6f0; --muted:#9a9fb5; --line:#2b2f40;
+  --accent:#9aa6f0; --accent-soft:#232846; --ucl:#ef7b64; --ucl-soft:#3a201b; --ok:#6cc290; --ok-soft:#18332a; --warn:#e0a84a; color-scheme:dark}}
 :root[data-theme="dark"]{
-  --paper:#10171b; --grid:rgba(111,179,210,.06); --card:#172126; --ink:#e2eaed; --muted:#93a5ac; --line:#2a3a41;
-  --accent:#72b6d6; --accent-soft:#1b3340; --ucl:#ef7b64; --ucl-soft:#3a201b; --ok:#6cc290; --ok-soft:#18332a; --warn:#e0a84a; color-scheme:dark}
+  --paper:#10121a; --grid:rgba(154,166,240,.06); --card:#181b26; --ink:#e4e6f0; --muted:#9a9fb5; --line:#2b2f40;
+  --accent:#9aa6f0; --accent-soft:#232846; --ucl:#ef7b64; --ucl-soft:#3a201b; --ok:#6cc290; --ok-soft:#18332a; --warn:#e0a84a; color-scheme:dark}
 *{box-sizing:border-box}
 body{background:var(--paper);background-image:linear-gradient(var(--grid) 1px,transparent 1px),linear-gradient(90deg,var(--grid) 1px,transparent 1px);background-size:20px 20px;color:var(--ink);font-family:var(--f-body);font-size:15px;line-height:1.7}
 button{font:inherit;color:inherit}
@@ -247,9 +247,9 @@ mark.blank{background:var(--accent-soft);color:var(--accent);font-weight:700;pad
    図案の主役は「マークシートの楕円」。学習ロードの各ステージを塗りつぶす楕円で表す。
    色は管理図の配色：中心線の青（主色）、管理限界の赤（不正解）、安定の緑（正解）、注意の琥珀（連続記録）。
    =================================================================== */
-:root{--r-xl:24px;--r-lg:16px;--r-md:12px;--r-sm:8px;--pri:var(--accent);--on-pri:#fff;--pri-c:#d3e7f0;--on-pri-c:#0d3a4f;--surf2:#e9efed;--elev:0 1px 2px rgba(16,40,52,.08),0 2px 8px rgba(16,40,52,.06);--nav-h:72px;--flame:#c77412}
-@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){--hero-bg:#1b4256;--hero-fg:#e6f2f7;--pri-c:#1d3a48;--on-pri:#06212d;--on-pri-c:#cfe6f2;--surf2:#1d292e;--elev:0 1px 2px rgba(0,0,0,.4);--flame:#f0a43a}}
-:root[data-theme="dark"]{--hero-bg:#1b4256;--hero-fg:#e6f2f7;--pri-c:#1d3a48;--on-pri:#06212d;--on-pri-c:#cfe6f2;--surf2:#1d292e;--elev:0 1px 2px rgba(0,0,0,.4);--flame:#f0a43a}
+:root{--r-xl:24px;--r-lg:16px;--r-md:12px;--r-sm:8px;--pri:var(--accent);--on-pri:#fff;--pri-c:#dde1f7;--on-pri-c:#1b2266;--surf2:#eaecf4;--elev:0 1px 2px rgba(20,24,60,.08),0 2px 8px rgba(20,24,60,.06);--nav-h:72px;--flame:#c77412}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){--hero-bg:#262d5e;--hero-fg:#e8eaff;--pri-c:#262c52;--on-pri:#0d1030;--on-pri-c:#dde1fb;--surf2:#1f2230;--elev:0 1px 2px rgba(0,0,0,.4);--flame:#f0a43a}}
+:root[data-theme="dark"]{--hero-bg:#262d5e;--hero-fg:#e8eaff;--pri-c:#262c52;--on-pri:#0d1030;--on-pri-c:#dde1fb;--surf2:#1f2230;--elev:0 1px 2px rgba(0,0,0,.4);--flame:#f0a43a}
 html{-webkit-tap-highlight-color:transparent;font-size:calc(16px * var(--fs,1))}
 /* 数字は桁がそろう等幅の数字にする（書体は本文と同じ） */
 body{font-variant-numeric:tabular-nums}
@@ -563,12 +563,12 @@ body.onbopen{overflow:hidden}
 .srl{padding-top:4px;padding-bottom:4px}.sri{border-bottom:1px solid var(--line);padding:8px 0}.sri:last-child,.srrow:last-child{border-bottom:0}
 .sri summary{cursor:pointer;line-height:1.6}.sri .lbl,.srrow .lbl{margin-left:8px;font-size:.72rem}.sra{margin:6px 0 2px}.sra b{margin-right:8px;color:var(--ok)}
 .srrow{display:flex;justify-content:space-between;align-items:center;gap:10px;padding:8px 0;border-bottom:1px solid var(--line);line-height:1.5}
-mark{background:#ffe58a;color:#1c2830;border-radius:2px;padding:0 1px}.code{font-family:var(--f-num);letter-spacing:.08em;font-size:1.05em}
+mark{background:#ffe58a;color:#1c2033;border-radius:2px;padding:0 1px}.code{font-family:var(--f-num);letter-spacing:.08em;font-size:1.05em}
 </style>
 
 <header class="appbar">
   <div class="bar">
-    <svg class="brandmark" viewBox="18 18 72 72" aria-hidden="true"><rect x="18" y="18" width="72" height="72" rx="18" fill="#1D5C7A"/><g fill="none" stroke="#FFFFFF" stroke-width="5.5" stroke-linecap="round"><circle cx="54" cy="54" r="14"/><path d="M54 31V77M31 54H77"/></g><circle cx="73" cy="35" r="5" fill="#F2A33A"/></svg>
+    <svg class="brandmark" viewBox="18 18 72 72" aria-hidden="true"><rect x="18" y="18" width="72" height="72" rx="18" fill="#3D4A9E"/><g fill="none" stroke="#FFFFFF" stroke-width="5.5" stroke-linecap="round"><circle cx="54" cy="54" r="14"/><path d="M54 31V77M31 54H77"/></g><circle cx="73" cy="35" r="5" fill="#E8A33D"/></svg>
     <h1 class="brand">幾何公差ドリル</h1>
     <button class="streakbtn" id="streakChip" aria-label="連続記録"></button>
     <button class="iconbtn" id="srchBtn" aria-label="検索"></button>
@@ -1689,7 +1689,7 @@ function confetti(){
   const cv=document.createElement('canvas'),W=innerWidth,H=innerHeight,dpr=devicePixelRatio||1;cv.width=W*dpr;cv.height=H*dpr;
   cv.style.cssText='position:fixed;inset:0;width:100%;height:100%;pointer-events:none;z-index:60';document.body.appendChild(cv);
   const g=cv.getContext('2d');g.scale(dpr,dpr);
-  const col=['#1d5c7a','#2c7a4b','#c77412','#c03d2a','#72b6d6','#6cc290'];
+  const col=['#3d4a9e','#2c7a4b','#c77412','#c03d2a','#9aa6f0','#6cc290'];
   const P=[...Array(90)].map(()=>({x:W/2+(Math.random()-.5)*W*.3,y:H*.35,vx:(Math.random()-.5)*9,vy:-Math.random()*10-4,r:Math.random()*6+4,a:Math.random()*6,va:(Math.random()-.5)*.3,c:col[Math.floor(Math.random()*col.length)],e:Math.random()<.5}));
   const t0=performance.now();
   (function step(t){const k=(t-t0)/1000;g.clearRect(0,0,W,H);
