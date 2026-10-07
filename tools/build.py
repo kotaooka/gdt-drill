@@ -20,6 +20,8 @@ URL = "https://kotaooka.github.io/gdt-drill/"
 DESC = ("JIS B 0021 を主軸に、幾何公差（GD&T）の記号・データム・位置度・最大実体公差方式を学ぶ無料・広告なしの問題集。"
         "図面を読む問題、毎回数値が変わる計算問題、ISO・ASME との違い、間隔反復の復習つき。Web版とAndroid版（非公式）。")
 OGIMG = "https://raw.githubusercontent.com/kotaooka/gdt-drill/main/screenshots/og.png"
+# Google Search Console の所有権の確認（HTML タグの content の値）。空なら出力しない
+GSV = ""
 META = (
     f'<meta name="description" content="{DESC}">'
     f'<link rel="canonical" href="{URL}">'
@@ -40,6 +42,8 @@ META = (
     f'<meta property="og:image" content="{OGIMG}">'
     '<meta name="twitter:card" content="summary_large_image">'
 )
+if GSV:
+    META += f'<meta name="google-site-verification" content="{GSV}">'
 NOSCRIPT = (
     "<noscript><h1>幾何公差ドリル</h1><p>" + DESC + "</p>"
     "<p>このアプリを使うには JavaScript を有効にしてください。</p></noscript>"
