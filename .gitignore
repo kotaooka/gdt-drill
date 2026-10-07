@@ -1,0 +1,14 @@
+tests/samples.json
+__pycache__/
+*.pyc
+# Android ビルド生成物
+android/.gradle/
+android/build/
+android/app/build/
+android/local.properties
+.idea/
+*.iml
+# 署名鍵（絶対に公開しない）
+*.keystore
+*.jks
+android/keystore.properties
