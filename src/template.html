@@ -901,6 +901,7 @@ function renderNav(){
 // 画面を切り替える。push=true のときは端末の「戻る」で前の画面に戻れるよう履歴に積む
 function setView(v,push=true){
   if(v==='practice')v=practiceSub;if(v==='resg')v=resSub;
+  if(FL&&!FL.done){if(view==='flash'&&v!=='flash')FL.away=Date.now();else if(v==='flash'&&FL.away){FL.t0+=Date.now()-FL.away;FL.away=null;}}
   if(v==='drill'||v==='mock')practiceSub=v;if(v==='res'||v==='tables'||v==='lab'||v==='read')resSub=v;
   if(push&&v!==view)try{history.pushState({v},'');}catch(e){}
   view=v;render();window.scrollTo(0,0);

@@ -6,14 +6,14 @@
 
 画面・問題・数値表は `src/` に分かれており、`tools/build.py` で1つの HTML（`docs/index.html`）にまとめます。この HTML が Web 版（GitHub Pages）で、Android アプリにも同梱されます。画面側は外部ライブラリを使わず、解答記録は端末内（localStorage）だけに保存します。外部と通信するのは、設定の「更新の確認」で GitHub の API（最新リリースの版名）を読むときだけです（「GitHub で報告」や各種リンクは、ブラウザで GitHub などのページを開くだけです）。
 
-Web 版は `docs/sw.js`（Service Worker）で、一度開いたあとはオフラインでも起動できます。ページ本体は通信を優先して取得するので、`docs/index.html` を更新しても `sw.js` を書き換える必要はありません。保存するファイルを増やしたときだけ、`sw.js` の `CORE` と `CACHE` の名前（`gdt-drill-v1` → `v2`）を変えてください。Android アプリでは Service Worker を登録しません。
+Web 版は `docs/sw.js`（Service Worker）で、一度開いたあとはオフラインでも起動できます。ページ本体は通信を優先して取得するので、`docs/index.html` を更新しても `sw.js` を書き換える必要はありません。保存するファイルを増やしたときや、アイコンなど保存済みのファイルを差し替えたときだけ、`sw.js` の `CORE` と `CACHE` の名前（いまは `gdt-drill-v2`。変えるときは `v3` に）を変えてください。Android アプリでは Service Worker を登録しません。
 
 ```
 src/
   template.html   画面（HTML・CSS・アプリ本体の JavaScript）
   bank.js         分野（FIELDS）・小分類（CATS）・実力診断の問数（DIAG）・知識問題（KB）
   gen.js          計算問題ジェネレータと共通関数
-  dai.js          総合問題（図面を読む大問の穴埋め・正誤）
+  dai.js          大問（図面を読む・記入枠を組む・検図。実務のケースを含む）
   path.js         学習ロードの章・ステージ・ストーリー
   figs.js         図（公差記入枠・データム記号・部品図・公差域）と、記号の SVG
   formulas.js     公式集（早見表の「公式」）
@@ -34,7 +34,7 @@ docs/
   index.html      ビルド結果（GitHub Pages の公開対象、APK にも同梱）
   manifest.webmanifest, sw.js, icons/  Web 版をホーム画面に追加（PWA）するためのファイル（手で管理）
 android/          Android アプリ（WebView で docs/index.html を表示）
-screenshots/      README・SNS 共有用の画像
+screenshots/      README の画面写真（home・drawing・lab・reader・diag）と SNS 共有用の画像（og.png）
 ```
 
 ## ビルドとテスト
@@ -46,6 +46,7 @@ python tools/build.py          # docs/index.html を生成
 node tests/test.js             # 生成・整合性の検査（検算用の tests/samples.json もここで作る）
 python tests/verify.py         # 計算問題の正解の照合（test.js の後に実行）
 node tests/lenbias.js          # 選択肢の長さの偏り（目安：最長・最短とも 25% 前後）
+node tests/calcbias.js         # 計算問題で、正解が選択肢の何番目の大きさかの偏り（目安：各 25% 前後）
 ```
 
 `src/` を編集したら `python tools/build.py` を実行し、`docs/index.html` も一緒にコミットしてください。`main` への push で GitHub Actions（`.github/workflows/test.yml`）が同じ検査を行い、`docs/index.html` がビルド結果と一致しているかも確認します。
@@ -93,7 +94,7 @@ node tests/lenbias.js          # 選択肢の長さの偏り（目安：最長�
 | `Boot.java` | 起動の入口。前回エラーで終了していれば内容を表示し、セーフモードで開ける |
 | `App.java` | 予期しないエラーの内容を保存する |
 | `MainActivity.java` | WebView の表示、戻るボタン、外部リンクを外部ブラウザで開く |
-| `Bridge.java` | Web から `window.GDTApp` として呼ぶ機能（通知の設定、今日の解答数の受け渡し） |
+| `Bridge.java` | Web から `window.GDTApp` として呼ぶ機能（通知の設定、今日の解答数の受け渡し、実力診断の結果の画像の保存） |
 | `Reminder.java` | 毎日のリマインダー通知の予約と表示 |
 
 権限：`INTERNET`、`POST_NOTIFICATIONS`（Android 13 以降、通知をオンにしたときに許可を求める）、`RECEIVE_BOOT_COMPLETED`（再起動後に通知を予約し直す）、`VIBRATE`。正確なアラームの権限は使わないため、通知は数分遅れることがあります。
@@ -129,12 +130,16 @@ node tests/lenbias.js          # 選択肢の長さの偏り（目安：最長�
 1. `src/res.js` の `APP.version`・`APP.date`・`history` を更新する（1行で簡潔に）。
 2. `python tools/build.py` を実行し、テストを通す。
 3. `git add -A`、`git commit`、`git push`。
-4. GitHub の Releases で、`APP.version` に `v` を付けたタグ（例：`APP.version` が `2.0.3` なら `v2.0.3`）を作って公開する。数分後に `gdt-drill.apk` が自動で添付される。
+4. GitHub の Releases で、`APP.version` に `v` を付けたタグ（例：`APP.version` が `0.6.2` なら `v0.6.2`）を作って公開する。数分後に `gdt-drill.apk` が自動で添付される。
 
-タグ名は必ず `APP.version` と一致させてください。アプリの「更新の確認」は最新リリースのタグ名と `APP.version` を比べるため、ずれていると、最新版でも「新しい版があります」と表示され続けます。タグは `v` と数字・ピリオドだけにします（`v2.0.3-beta` などは版名として読めません）。
+タグ名は必ず `APP.version` と一致させてください。アプリの「更新の確認」は最新リリースのタグ名と `APP.version` を比べるため、ずれていると、最新版でも「新しい版があります」と表示され続けます。タグは `v` と数字・ピリオドだけにします（`v0.6.2-beta` などは版名として読めません）。
 
 Web 版（GitHub Pages）は、`docs/index.html` を push した時点で更新されます。
 
 ## バージョン
 
-`src/res.js` の `APP.version` で管理し、アプリの設定画面と最下部に表示しています。形式は `メジャー.マイナー.パッチ`（例 `2.0.3`）で、更新の確認では数字ごとに大小を比べます（`2.0.10` は `2.0.9` より新しい）。
+`src/res.js` の `APP.version` で管理し、アプリの設定画面と最下部に表示しています。形式は `メジャー.マイナー.パッチ`（例 `0.6.2`）で、更新の確認では数字ごとに大小を比べます（`0.6.10` は `0.6.9` より新しい）。
+
+## ライセンス
+
+[MIT License](LICENSE)。問題・解説・図も同じライセンスで公開しています（規格の本文や図は含みません）。

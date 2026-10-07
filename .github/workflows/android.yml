@@ -43,7 +43,7 @@ jobs:
           KEY_ALIAS: ${{ secrets.KEY_ALIAS }}
           KEY_PASSWORD: ${{ secrets.KEY_PASSWORD }}
           VERSION_NAME: ${{ github.event_name == 'release' && github.event.release.tag_name || format('dev.{0}', github.run_number) }}
-        # 版数は 100＋実行番号（手元で作った APK（〜2.0.1 は 18）より必ず大きくして、上書きインストールできるようにする）
+        # 版数は 100＋実行番号（手元で作った APK（版数の既定値 1）より必ず大きくして、上書きインストールできるようにする）
         run: VERSION_CODE=$((100 + GITHUB_RUN_NUMBER)) gradle assembleRelease --no-daemon --stacktrace
 
       - name: ファイル名を整える
