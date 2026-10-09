@@ -3669,6 +3669,7 @@ function settingsHTML(){
     <div class="srow"><div class="t"><b>バージョン</b><span>${APP.date} 更新</span></div><span class="ver-big" style="font-size:1.1rem">v${APP.version}</span></div>
     <div class="srow"><div class="t"><b>更新の確認</b><span id="updState">${updHTML()}</span></div><button class="btn ghost sm" data-upd>確認する</button></div>
     <div class="srow"><div class="t"><b>GitHub のページ</b><span>使い方・変更内容・不具合の報告</span></div><a class="btn ghost sm" href="${REPO.page}" target="_blank" rel="noopener">開く</a></div>
+    <div class="srow"><div class="t"><b>QC Workbench</b><span>工程能力・抜取検査・公差積み上げの計算ツールなど、ほかのツールの一覧</span></div><a class="btn ghost sm" href="https://kotaooka.github.io/" target="_blank" rel="noopener">開く</a></div>
     <div style="padding:6px 0 10px">${H.slice(0,3).map(([v,d,t])=>`<div class="hist"><b>v${v}</b><span class="d">${d}</span><span>${esc(t)}</span></div>`).join('')}
     ${H.length>3?`<details class="oldhist"><summary>以前の変更（${H.length-3}件）</summary>${H.slice(3).map(([v,d,t])=>`<div class="hist"><b>v${v}</b><span class="d">${d}</span><span>${esc(t)}</span></div>`).join('')}</details>`:''}</div>
   </div>`;
