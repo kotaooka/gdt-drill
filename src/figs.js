@@ -219,7 +219,7 @@ const FIG={
   const row=(cells,yy,h,head)=>{let x=X0;cells.forEach((c,i)=>{s+=`<rect class="g-fcf" x="${x}" y="${yy}" width="${W[i]}" height="${h}"${head?' style="fill:var(--surf2)"':''}/>`;
     const t=txtG(c,0,0);const tx=i===0||String(c).length<=3?x+(W[i]-t.w)/2:x+4;s+=txtG(c,tx,yy+h/2+4,head?'g-tb':'g-t').svg;x+=W[i];});};
   row(o.cols,y,HH,true);y+=HH;
-  o.rows.forEach((r,i)=>{if((o.mark||[]).includes(i))s+=`<rect x="${X0}" y="${y}" width="${W.reduce((a,b)=>a+b,0)}" height="${RH}" style="fill:var(--accent-soft)"/>`;row(r,y,RH);y+=RH;});
+  o.rows.forEach((r,i)=>{if((o.mark||[]).includes(i))s+=`<rect x="${X0}" y="${y}" width="${W.reduce((a,b)=>a+b,0)}" height="${RH}" style="fill:var(--accent-weak)"/>`;row(r,y,RH);y+=RH;});
   return{svg:s,vb:`0 0 320 ${y+8}`,cap:o.cap||'検査成績書（抜粋）'};},
  // 指示線の位置の比較：ア＝寸法線の延長上、イ＝寸法線からずらす
  leader(o){

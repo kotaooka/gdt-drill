@@ -25,7 +25,12 @@ GSV = ""
 META = (
     f'<meta name="description" content="{DESC}">'
     f'<link rel="canonical" href="{URL}">'
-    '<meta name="theme-color" content="#3D4A9E">'
+    '<meta name="theme-color" content="#3D4A9E" media="(prefers-color-scheme: light)">'
+    '<meta name="theme-color" content="#10121a" media="(prefers-color-scheme: dark)">'
+    # 字体は QC Workbench の各ツールと同じ BIZ UDPゴシック（本文）と IBM Plex Mono（数値）
+    '<link rel="preconnect" href="https://fonts.googleapis.com">'
+    '<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>'
+    '<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=BIZ+UDPGothic:wght@400;700&family=IBM+Plex+Mono:wght@500&display=swap">'
     # ホーム画面に追加（PWA）用：manifest・アイコン。Service Worker の登録は画面側（template.html）で行う
     '<link rel="manifest" href="manifest.webmanifest">'
     '<link rel="icon" type="image/png" sizes="32x32" href="icons/favicon-32.png">'

@@ -19,14 +19,14 @@ const LABS=[
    let s=`<path class="f-axis" d="M${X0} ${Y0}H${X1+6}M${X0} ${Y0}V${Y1-8}"/>`;
    s+=st.mode==='RFS'?`<path class="g-zone" d="M${X0} ${Y0}V${Y(t)}H${X1}V${Y0}Z"/>`:`<path class="g-zone" d="M${X0} ${Y0}V${Y(t)}L${X1} ${Y(tmax)}V${Y0}Z"/>`;
    if(inSize){const yy=Y(allow);s+=`<path class="g-hid" d="M${X(d)} ${Y0}V${yy}H${X0}"/><circle class="g-dot" cx="${X(d)}" cy="${yy}" r="3.5"/>`;}
-   s+=`<circle cx="${X(d)}" cy="${Y(dev)}" r="4" style="fill:${posOK&&inSize?'var(--ok)':'var(--ucl)'}"/><text class="g-ts" x="${X(d)+6}" y="${Y(dev)+4}">偏差</text>`;
+   s+=`<circle cx="${X(d)}" cy="${Y(dev)}" r="4" style="fill:${posOK&&inSize?'var(--ok)':'var(--ng)'}"/><text class="g-ts" x="${X(d)+6}" y="${Y(dev)+4}">偏差</text>`;
    if(inSize)s+=`<text class="g-ts" x="${X(d)-6}" y="${Y(allow)-5}" text-anchor="end">許容</text>`;
    s+=`<text class="g-ts" x="${X0}" y="${Y0+13}" text-anchor="middle">${mms.toFixed(1)}</text><text class="g-ts" x="${X1}" y="${Y0+13}" text-anchor="middle">${lms.toFixed(1)}</text><text class="g-ts" x="${(X0+X1)/2}" y="${Y0+26}" text-anchor="middle">穴の実寸法</text><text class="g-ts" x="${X0+4}" y="${Y1-10}">許される位置度</text>`;
    // 右：上から見た公差域（円）と穴の中心
    const C=[250,90],S=300,a=st.ang*Math.PI/180,px=C[0]+st.r*S*Math.cos(a),py=C[1]-st.r*S*Math.sin(a);
    s+=`<path class="g-ctr" d="M${C[0]-62} ${C[1]}H${C[0]+62}M${C[0]} ${C[1]-62}V${C[1]+62}"/>`;
    if(t>0)s+=`<circle class="g-zl" cx="${C[0]}" cy="${C[1]}" r="${t/2*S}"/>`;
-   s+=`<circle class="g-zone" cx="${C[0]}" cy="${C[1]}" r="${Math.max(0.6,allow/2*S)}"/><circle cx="${px}" cy="${py}" r="4" style="fill:${posOK&&inSize?'var(--ok)':'var(--ucl)'}"/>`;
+   s+=`<circle class="g-zone" cx="${C[0]}" cy="${C[1]}" r="${Math.max(0.6,allow/2*S)}"/><circle cx="${px}" cy="${py}" r="4" style="fill:${posOK&&inSize?'var(--ok)':'var(--ng)'}"/>`;
    s+=`<text class="g-ts" x="${C[0]}" y="${C[1]+78}" text-anchor="middle">上から見た公差域</text>`;
    const out=`<div class="labout"><div><span class="lbl">許される位置度</span><b>φ${allow.toFixed(3)}</b><span class="note">${st.mode==='RFS'?'Ⓜ なしなので実寸法によらない':`図面の値 φ${t} ＋ ボーナス ${bonus.toFixed(3)}`}</span></div>
      <div><span class="lbl">位置度の偏差</span><b>φ${dev.toFixed(3)}</b><span class="note">ずれ ${st.r.toFixed(3)} の2倍</span></div>
@@ -43,7 +43,7 @@ const LABS=[
    s+=`<text class="g-ts" x="${C[0]+t/2*S+4}" y="${C[1]-t/2*S+10}" style="fill:var(--accent)">±0.05 の正方形</text><text class="g-tr" x="${C[0]-t/2*S-4}" y="${C[1]+t/2*S+14}" text-anchor="end">φ0.1 の円</text>`;
    const out=`<div class="labout"><div><span class="lbl">位置度の偏差</span><b>φ${dev.toFixed(4)}</b><span class="note">2√(Δx²＋Δy²)</span></div>
      <div><span class="lbl">位置度 φ0.1（円）</span><b style="color:var(--${cOK?'ok':'ucl'})">${cOK?'合格':'不合格'}</b></div>
-     <div><span class="lbl">座標 ±0.05（正方形）</span><b style="color:var(--${sOK?'ok':'ucl'})">${sOK?'合格':'不合格'}</b>${cOK!==sOK?`<span class="note" style="color:var(--ucl)">判定が分かれる位置（${sOK?'正方形の隅：円では不合格':'円の中だが正方形の外'}）</span>`:''}</div></div>`;
+     <div><span class="lbl">座標 ±0.05（正方形）</span><b style="color:var(--${sOK?'ok':'ucl'})">${sOK?'合格':'不合格'}</b>${cOK!==sOK?`<span class="note" style="color:var(--ng)">判定が分かれる位置（${sOK?'正方形の隅：円では不合格':'円の中だが正方形の外'}）</span>`:''}</div></div>`;
    return{svg:s,vb:'0 0 320 184',out};}},
  {k:'st',h:'公差の積み上げ：最悪値法と RSS',
   intro:'すき間 G＝A−B−C に、穴の位置度 φt（1方向に ±t/2）が加わる場合。各公差を動かして、最悪値法と二乗和平方根（RSS）の差を確かめる。',
