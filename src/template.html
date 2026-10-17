@@ -206,6 +206,8 @@ mark.blank{background:var(--accent-weak);color:var(--accent);font-weight:700;pad
 .hist b{font-family:var(--f-num)}
 .hist .d{font-family:var(--f-num);color:var(--ink2)}
 .appfoot{margin-top:32px;padding-top:12px;border-top:1px solid var(--line);font-size:.75rem;color:var(--ink2);text-align:center}
+.appfoot .support a{color:inherit;white-space:nowrap}
+@media print{.appfoot .support{display:none}}
 .appfoot .ver{font-family:var(--f-num);color:var(--accent);font-weight:600}
 @media (max-width:520px){.refrow{grid-template-columns:1fr}.hist{grid-template-columns:auto 1fr}.hist span:last-child{grid-column:1/-1}}
 @media (max-width:420px){.kpi .v{font-size:1.2rem}.crit .v{font-size:1.05rem}}
@@ -948,7 +950,7 @@ function render(){
   const key=view==='drill'&&quiz?'q'+quiz.i+'/'+quiz.list.length:view==='mock'&&mock&&!mock.done?'m'+mock.i:'';
   if(key&&key!==lastCardKey){const c=m.querySelector('.qcard');if(c&&lastCardKey)c.classList.add('enter');}
   lastCardKey=key;
-  if(!focus)m.insertAdjacentHTML('beforeend',`<footer class="appfoot">幾何公差ドリル <span class="ver">v${APP.version}</span>（${APP.date} 更新）・非公式の学習教材です</footer>`);
+  if(!focus)m.insertAdjacentHTML('beforeend',`<footer class="appfoot">幾何公差ドリル <span class="ver">v${APP.version}</span>（${APP.date} 更新）・非公式の学習教材です<br><span class="support"><a href="https://buymeacoffee.com/kotaooka" target="_blank" rel="noopener"><span aria-hidden="true">☕</span> 開発を応援する（Buy Me a Coffee）</a></span></footer>`);
 }
 
 function subtabs(g){
