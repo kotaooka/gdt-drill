@@ -10,18 +10,18 @@ function flashNew(){
 function flashTime(){return ((FL.t1||Date.now())-FL.t0)/1000;}
 function flashHTML(){
   const F=P.flash||{};
-  if(!FL)return `<h2>記号フラッシュ</h2><div class="panel"><p style="margin-top:0">14の幾何特性の記号を、記号から名前、名前から記号の両方向でテンポよく答えます。1問まちがえるごとに ${FLASH_PEN} 秒を加算します。</p>
+  if(!FL)return `<h2>記号フラッシュ</h2><div class="panel"><p style="margin-top:0">14の幾何特性の記号を、記号から名前、名前から記号の両方向でテンポよく答えます。1問まちがえるごとに${FLASH_PEN}秒を加算します。</p>
     <div class="kpis" style="margin:8px 0"><div class="panel kpi"><div class="lbl">自己ベスト</div><div class="v">${F.best?F.best.toFixed(1):'—'}<small>${F.best?'秒':''}</small></div></div><div class="panel kpi"><div class="lbl">挑戦した回数</div><div class="v">${F.plays||0}<small>回</small></div></div></div>
-    <div class="mstart"><button class="btn" data-act="flashgo"><b>スタート</b><span>14問・まちがいは +${FLASH_PEN} 秒</span></button></div></div>
+    <div class="mstart"><button class="btn" data-act="flashgo"><b>スタート</b><span>14問・まちがいは +${FLASH_PEN}秒</span></button></div></div>
     <div class="actions" style="margin-top:12px"><button class="btn ghost" data-act="flashexit">ホームへ戻る</button></div>`;
   if(FL.done){const tot=FL.score,isBest=FL.best==null||tot<FL.best;
     return `<h2>記号フラッシュの結果</h2><div class="panel" style="text-align:center"><div class="lbl">合計タイム</div><div class="flbig">${tot.toFixed(1)}<small>秒</small></div>
-      <p class="note">解答 ${FL.t.toFixed(1)} 秒 ＋ まちがい ${FL.miss} 回 × ${FLASH_PEN} 秒</p>${isBest?'<div class="verdict pass" style="font-size:1.3rem">自己ベスト更新！</div>':`<p class="note">自己ベスト ${FL.best.toFixed(1)} 秒</p>`}</div>
+      <p class="note">解答${FL.t.toFixed(1)}秒 ＋ まちがい${FL.miss}回 × ${FLASH_PEN}秒</p>${isBest?'<div class="verdict pass" style="font-size:1.3rem">自己ベスト更新</div>':`<p class="note">自己ベスト${FL.best.toFixed(1)}秒</p>`}</div>
       <div class="actions" style="margin-top:12px"><button class="btn" data-act="flashgo">もう一度</button><button class="btn ghost" data-act="flashexit">ホームへ戻る</button></div>`;}
   const q=FL.qs[FL.i],n=FL.qs.length;
   const prompt=q.dir==='s2n'?`<div class="flsym">${symSVG(q.k)}</div><div class="note">この記号の名前は？</div>`:`<div class="flname">${esc(SYMN[q.k])}</div><div class="note">この幾何特性の記号は？</div>`;
   const opts=q.ch.map(k=>{const cl=FL.wrongAt===k?'wrong':FL.lock&&k===q.k?'right':'';return `<button class="opt flopt ${cl}" data-flash="${k}" ${FL.lock?'disabled':''}>${q.dir==='s2n'?`<span class="tx">${esc(SYMN[k])}</span>`:`<span class="gsym big">${symSVG(k)}</span>`}</button>`;}).join('');
-  return `<div class="mockhead"><span class="timer-lbl" style="font-weight:700">${FL.i+1} / ${n}<span class="note" style="margin:0">・まちがい ${FL.miss}</span></span><span class="timer" id="fltime">${flashTime().toFixed(1)}</span></div>
+  return `<div class="mockhead"><span class="timer-lbl" style="font-weight:700">${FL.i+1} / ${n}<span class="note" style="margin:0">・まちがい${FL.miss}</span></span><span class="timer" id="fltime">${flashTime().toFixed(1)}</span></div>
     <div class="qtop" style="margin:0 0 8px"><div class="prog"><i style="width:${FL.i/n*100}%"></i></div></div>
     <div class="qcard flcard">${prompt}<div class="flopts${q.dir==='n2s'?' syms':''}">${opts}</div></div>
     <div class="actions" style="margin-top:12px"><button class="btn ghost" data-act="flashquit">やめる</button></div>`;
@@ -85,16 +85,16 @@ function diagCanvas(r,n,name){
   g.fillStyle=C.bg;g.fillRect(0,0,W,H);g.fillStyle=C.pri;g.fillRect(0,0,W,14);
   T('幾何公差ドリル　実力診断の結果',pad,100,44,C.ink,700);
   T(`${name?name+'　':''}${new Date().toLocaleDateString('ja-JP')}　${n}問`,pad,156,30,C.muted,400,'left',W-pad*2);
-  if(code){T(`出題コード ${code}（v${mock.ver||APP.version}）`,pad,200,30,C.pri,700,'left',W-pad*2);g.translate(0,off);}
+  if(code){T(`出題コード${code}（v${mock.ver||APP.version}）`,pad,200,30,C.pri,700,'left',W-pad*2);g.translate(0,off);}
   g.fillStyle=C.soft;g.beginPath();g.roundRect?g.roundRect(pad,196,W-pad*2,200,24):g.rect(pad,196,W-pad*2,200);g.fill();
   T('総合',pad+40,262,30,C.muted);T(`${r.tot}%`,pad+40,360,96,r.tot>=70?C.ok:C.ng,800);
-  if(r.prev)T(`前回 ${r.prev.tot}%（${r.tot-r.prev.tot>=0?'+':''}${r.tot-r.prev.tot}）`,W-pad-40,360,32,C.muted,400,'right');
+  if(r.prev)T(`前回${r.prev.tot}%（${r.tot-r.prev.tot>=0?'+':''}${r.tot-r.prev.tot}）`,W-pad-40,360,32,C.muted,400,'right');
   let y=460;T('分野ごとの正答率',pad,y,34,C.ink,700);y+=30;
   for(const F of FIELDS){const v=r.f[F.k];if(v==null)continue;y+=54;T(F.name,pad,y,28,C.ink);T(`${v}%`,W-pad,y,30,v>=70?C.ok:C.ng,700,'right');
     y+=16;g.fillStyle=C.line;g.fillRect(pad,y,W-pad*2,14);g.fillStyle=v>=70?C.pri:C.ng;g.fillRect(pad,y,(W-pad*2)*v/100,14);y+=14;}
   if(weak.length){y+=80;T('弱い項目（今回まちがえた問題を含む項目）',pad,y,34,C.ink,700);y+=12;
     for(const o of weak){y+=52;T(`・${o.name}`,pad,y,28,C.ink,400,'left',W-pad*2-120);T(`${o.c}／${o.n}`,W-pad,y,28,C.ng,700,'right');}}
-  T(`幾何公差ドリル v${APP.version}・非公式の学習教材`,pad,H-40-off,24,C.muted);
+  T(`幾何公差ドリルv${APP.version}・非公式の学習教材`,pad,H-40-off,24,C.muted);
   return cv;
 }
 async function saveDiagImage(){

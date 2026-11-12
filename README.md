@@ -4,6 +4,9 @@
 
 **[▶ Web 版を開く](https://kotaooka.github.io/gdt-drill/)**　｜　**[⬇ Android アプリ（APK）をダウンロード](https://github.com/kotaooka/gdt-drill/releases/latest)**
 
+- **記録はこの端末の中だけに保存し、この端末の外には送りません**
+- 画面の字体（BIZ UDPゴシック・IBM Plex Mono）は Google Fonts から読み込むため、開いたときに Google のサーバーへ接続します
+
 <p>
 <img src="screenshots/home.png" width="180" alt="ホーム画面：今日の目標、連続記録、今日の復習">
 <img src="screenshots/drawing.png" width="180" alt="図面を読む：部品図と公差記入枠を見て、本文の空欄を選ぶ">

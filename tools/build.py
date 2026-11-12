@@ -41,7 +41,7 @@ META = (
     '<meta name="apple-mobile-web-app-status-bar-style" content="default">'
     '<meta property="og:type" content="website">'
     '<meta property="og:site_name" content="幾何公差ドリル">'
-    '<meta property="og:title" content="幾何公差ドリル｜JIS B 0021 の幾何公差を学ぶ無料問題集">'
+    '<meta property="og:title" content="幾何公差ドリル｜JIS B 0021の幾何公差を学ぶ無料問題集（非公式）">'
     f'<meta property="og:description" content="{DESC}">'
     f'<meta property="og:url" content="{URL}">'
     f'<meta property="og:image" content="{OGIMG}">'

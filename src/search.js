@@ -40,13 +40,13 @@ function srMark(text,q,max){
 }
 function srOut(){
   const q=SR.q.trim();
-  if(!q)return `<p class="note">例：「最大実体」「データムシフト」「B 0419」「振れ」「CZ」「ゲージ」。空白で区切ると、すべての語を含むものを探します。英語の略語（MMC・CMM・RSS など）でも探せます。</p>`;
+  if(!q)return `<p class="note">例：「最大実体」「データムシフト」「B 0419」「振れ」「CZ」「ゲージ」。空白で区切ると、すべての語を含むものを探します。英語の略語（MMC・CMM・RSSなど）でも探せます。</p>`;
   const R=srFind(q),by=t=>R.filter(o=>o.t===t);
   if(!R.length)return `<p class="note">「${esc(q)}」を含むものは見つかりませんでした。語を短くするか、別の言い方で探してください。</p>`;
   const K=by('k'),X=by('x'),S=by('syl'),TB=by('tbl'),F=by('fml'),RF=by('ref'),LB=by('lab');
   const sec=(h,n,body)=>n?`<h3 class="srh">${h}<span>${n}件</span></h3>${body}`:'';
   return `<p class="note">${R.length}件見つかりました。</p>
-  ${sec('知識問題',K.length,`${K.length>1?`<div class="actions" style="margin:0 0 8px"><button class="btn tonal sm" data-act="srdrill">見つかった問題を演習する（${Math.min(K.length,20)}問）</button></div>`:''}<div class="panel srl">${K.slice(0,40).map(o=>`<details class="sri"><summary>${srMark(o.i.q,q,90)}<span class="lbl">${esc(CATS[o.i.cat].name)}</span></summary><p class="sra"><b>正解</b>${srMark(optText(o.i.ch[0]),q)}</p><p class="note">${srMark(o.i.ex,q)}</p></details>`).join('')}${K.length>40?`<p class="note">ほか ${K.length-40}件（語を足して絞り込んでください）</p>`:''}</div>`)}
+  ${sec('知識問題',K.length,`${K.length>1?`<div class="actions" style="margin:0 0 8px"><button class="btn tonal sm" data-act="srdrill">見つかった問題を演習する（${Math.min(K.length,20)}問）</button></div>`:''}<div class="panel srl">${K.slice(0,40).map(o=>`<details class="sri"><summary>${srMark(o.i.q,q,90)}<span class="lbl">${esc(CATS[o.i.cat].name)}</span></summary><p class="sra"><b>正解</b>${srMark(optText(o.i.ch[0]),q)}</p><p class="note">${srMark(o.i.ex,q)}</p></details>`).join('')}${K.length>40?`<p class="note">ほか${K.length-40}件（語を足して絞り込んでください）</p>`:''}</div>`)}
   ${sec('大問（図面を読む・記入枠を組む・検図）',X.length,`<div class="panel srl">${X.map(o=>`<div class="srrow"><div>${srMark(o.s.title,q)}<span class="lbl">${KLAB[xkOf(o.s)]}</span></div><button class="btn ghost sm" data-srset="${o.s.id}">解く</button></div>`).join('')}</div>`)}
   ${sec('出題範囲の項目',S.length,`<div class="panel srl">${S.map(o=>`<div class="srrow"><div>${srMark(o.s.name,q)}<span class="lbl">${esc(o.s.f)}</span></div><button class="btn ghost sm" data-syl="${o.s.key}">演習</button></div>`).join('')}</div>`)}
   ${sec('早見表',TB.length,`<div class="panel srl">${TB.map(o=>`<div class="srrow"><div>${srMark(o.r.map(v=>typeof v==='object'&&v&&v.sym?SYMN[v.sym]:v).join('／'),q,120)}<span class="lbl">${esc(o.T.label)}</span></div><button class="btn ghost sm" data-ttopen="${o.T.k}">表を見る</button></div>`).join('')}</div>`)}

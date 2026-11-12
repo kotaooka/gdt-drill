@@ -133,7 +133,7 @@ const FIG={
     if(o.zone){const t=6;s+=`<rect class="g-zone" x="${X0+W-t}" y="${Y0}" width="${t}" height="${H}"/><text class="g-tr" x="${X0+W+6}" y="${Y0+H-4}">t</text>`;}}
   else{const F=fcfG(f,X0+W*0.55,Y0-28);s+=F.svg+leadG(X0+W*0.55,Y0-17,X0+W*0.45,Y0-17,X0+W*0.45,Y0);
     if(o.zone){const t=6;s+=`<rect class="g-zone" x="${X0}" y="${Y0}" width="${W}" height="${t}"/><text class="g-tr" x="${X0-12}" y="${Y0+6}">t</text>`;}}
-  return{svg:s,vb:'0 0 320 150',cap:o.cap||'直方体の部品（データム A は下面）'};},
+  return{svg:s,vb:'0 0 320 150',cap:o.cap||'直方体の部品（データムAは下面）'};},
 
  // 段付き軸：左の大径部の軸線がデータム A、右の小径部に公差を指示。o={fcf, onAxis:true（矢印を寸法線の延長上に置く）, dl:'φ40', dr:'φ20'}
  shaft(o){
@@ -147,7 +147,7 @@ const FIG={
   if(o.nofcf)s+=`<text class="g-tr" x="${dx2}" y="${y-R2-10}" text-anchor="middle">▼ この形体</text>`;
   else{const f=o.fcf||{sym:'run',tol:'0.03',dats:['A']},F=fcfG(f,o.onAxis===false?176:150,10);s+=F.svg;
   const ax=o.onAxis===false?226:dx2;s+=arrowG(ax,32,ax,y-R2);}
-  return{svg:s,vb:'0 0 320 150',cap:o.cap||'段付き軸（データム A は左の大径部の軸線）'};},
+  return{svg:s,vb:'0 0 320 150',cap:o.cap||'段付き軸（データムAは左の大径部の軸線）'};},
 
  // 両端の軸受部 A・B（共通データム A-B）と、中央の大径部。o={nofcf, fcf, mark:'中央の外周'}
  shaft2(o){
@@ -158,7 +158,7 @@ const FIG={
   s+=dim(52,J,'φ20')+datG('A',52,y+J,'d',8)+dim(248,J,'φ20')+datG('B',248,y+J,'d',8)+dim(170,M,'φ50');
   if(o.nofcf)s+=`<text class="g-tr" x="140" y="${y-M-10}" text-anchor="middle">▼ ${esc(o.mark||'この外周面')}</text>`;
   else{const F=fcfG(o.fcf||{sym:'run',tol:'0.03',dats:['A-B']},104,4);s+=F.svg+arrowG(130,26,130,y-M);}
-  return{svg:s,vb:'0 0 320 140',cap:o.cap||'両端の軸受部 A・B で支える軸'};},
+  return{svg:s,vb:'0 0 320 140',cap:o.cap||'両端の軸受部A・Bで支える軸'};},
  // 溝付きのブロック（上から見た図）。データム A は外側の幅の中心平面。o={nofcf, fcf}
  slot(o){
   const X0=60,Y0=34,W=200,H=84,sw=40,cx=X0+W/2;let s='';
@@ -169,7 +169,7 @@ const FIG={
   const ys=Y0+24;s+=`<path class="g-thin" d="M${cx-sw/2+6} ${ys}H${cx+sw/2-6}"/>`+arrowG(cx,ys,cx-sw/2,ys,'g-arw',6,2.2)+arrowG(cx,ys,cx+sw/2,ys,'g-arw',6,2.2)+`<text class="g-t" x="${cx+sw/2+4}" y="${ys+4}">16</text>`;
   if(o.nofcf)s+=`<text class="g-tr" x="${cx}" y="${Y0-14}" text-anchor="middle">▼ 溝の中心平面</text>`;
   else{const F=fcfG(o.fcf||{sym:'sym',tol:'0.1',dats:['A']},cx-11,2);s+=F.svg+arrowG(cx,24,cx,ys-2);}
-  return{svg:s,vb:'0 0 320 178',cap:o.cap||'溝付きのブロック（データム A は外側の幅 80 の中心平面）'};},
+  return{svg:s,vb:'0 0 320 178',cap:o.cap||'溝付きのブロック（データムAは外側の幅80の中心平面）'};},
  // 曲面をもつ部品：理論的に正確な寸法で輪郭を定める。o={nofcf, fcf}
  curve(o){
   const X0=50,Y0=100,W=200;let s='';
@@ -179,7 +179,7 @@ const FIG={
   s+=`<text class="g-ts" x="${X0+W/2}" y="${Y0-14}" text-anchor="middle">R・高さは理論的に正確な寸法（省略）</text>`;
   if(o.nofcf)s+=`<text class="g-tr" x="${X0+W*0.5}" y="22" text-anchor="middle">▼ この曲面</text>`;
   else{const F=fcfG(o.fcf||{sym:'sprof',tol:'0.2',dats:['A','B','C']},X0+W*0.55,0);s+=F.svg+arrowG(X0+W*0.6,22,X0+W*0.6,34);}
-  return{svg:s,vb:'0 0 320 156',cap:o.cap||'曲面をもつ部品（データム A は裏面、B は下面、C は左面）'};},
+  return{svg:s,vb:'0 0 320 156',cap:o.cap||'曲面をもつ部品（データムAは裏面、Bは下面、Cは左面）'};},
  // 4つの穴のパターン（データム A は裏面、B は下面、C は左面）。o={fcf（rows・composite も可）, nofcf}
  pattern(o){
   const X0=44,Y0=o.nofcf?34:(o.fcf&&o.fcf.rows?82:62),S=1.25,W=160*S,H=100*S,r=7;let s=`<rect class="g-objf" x="${X0}" y="${Y0}" width="${W}" height="${H}"/>`;
@@ -194,13 +194,13 @@ const FIG={
   const fx=X0+W*0.55,fy=14;s+=`<text class="g-t" x="${fx}" y="${fy}">4×φ8 +0.1/0</text>`;
   if(o.nofcf)s+=arrowG(fx-4,fy-4,P[3][0]+r*0.7,P[3][1]-r*0.7);
   else{const F=fcfMulti(o.fcf||{sym:'pos',tol:'φ0.2(M)',dats:['A','B','C']},fx,fy+5);s+=F.svg+`<path class="g-thin" style="stroke:var(--ink)" d="M${fx} ${fy+16}H${fx-10}"/>`+arrowG(fx-10,fy+16,P[3][0]+r*0.7,P[3][1]-r*0.7);}
-  return{svg:s,vb:`0 0 320 ${Y0+H+66}`,cap:o.cap||'4つの穴をもつ板（データム A は裏面、B は下面、C は左面）'};},
+  return{svg:s,vb:`0 0 320 ${Y0+H+66}`,cap:o.cap||'4つの穴をもつ板（データムAは裏面、Bは下面、Cは左面）'};},
  // 測定値の並び（判定問題用）。o={vals:[], band:[下,上]（答え合わせで重ねる公差域）, base:0 の線の名前, unit}
  readings(o){
   const v=o.vals,n=v.length,X0=40,X1=300,yc=82,mx=Math.max(...v.map(Math.abs),o.band?Math.max(...o.band.map(Math.abs)):0)*1.25||0.05,Y=x=>yc-x/mx*58,X=i=>X0+(i+0.5)*(X1-X0)/n;
   let s=`<path class="f-axis" d="M${X0} ${yc}H${X1}"/><text class="g-ts" x="${X0-4}" y="${yc+3}" text-anchor="end">0</text>`;
   if(o.base)s+=`<text class="g-ts" x="${X1}" y="${yc+12}" text-anchor="end">${esc(o.base)}</text>`;
-  if(o.band){const [lo,hi]=o.band;s+=`<rect class="g-zone" x="${X0}" y="${Y(hi)}" width="${X1-X0}" height="${Y(lo)-Y(hi)}"/><text class="g-tr" x="${X0+2}" y="${Y(hi)-3}">上限 ${(hi>=0?'+':'')+(+hi).toFixed(3)}</text><text class="g-tr" x="${X0+2}" y="${Y(lo)+11}">下限 ${(lo>=0?'+':'')+(+lo).toFixed(3)}</text>`;}
+  if(o.band){const [lo,hi]=o.band;s+=`<rect class="g-zone" x="${X0}" y="${Y(hi)}" width="${X1-X0}" height="${Y(lo)-Y(hi)}"/><text class="g-tr" x="${X0+2}" y="${Y(hi)-3}">上限${(hi>=0?'+':'')+(+hi).toFixed(3)}</text><text class="g-tr" x="${X0+2}" y="${Y(lo)+11}">下限${(lo>=0?'+':'')+(+lo).toFixed(3)}</text>`;}
   s+=`<polyline class="f-line thin" points="${v.map((x,i)=>`${X(i)},${Y(x)}`).join(' ')}"/>`;
   v.forEach((x,i)=>{const out=o.band&&(x<o.band[0]-1e-9||x>o.band[1]+1e-9);s+=`<circle cx="${X(i)}" cy="${Y(x)}" r="3.6" style="fill:var(--${out?'ucl':'pri'})"/><text class="g-ts" x="${X(i)}" y="${Y(x)+(x>=0?-8:15)}" text-anchor="middle">${(x>=0?'+':'')+x.toFixed(3)}</text>`;});
   return{svg:s,vb:'0 0 320 164',cap:o.cap||'測定した値'};},
@@ -235,7 +235,7 @@ const FIG={
   if(t)s+=`<circle class="g-zone" cx="${C[0]}" cy="${C[1]}" r="${t/2*S}"/>`;
   const px=C[0]+dx*S,py=C[1]-dy*S;s+=`<path class="g-act" d="M${C[0]} ${C[1]}L${px} ${py}"/><circle class="g-dot" cx="${px}" cy="${py}" r="3.4"/>`;
   s+=`<text class="g-t" x="${C[0]+4}" y="${C[1]+14}">真位置</text><text class="g-t" x="${px+6}" y="${py-6}">測定した中心</text>`;
-  s+=`<text class="g-ts" x="200" y="112">Δx＝${o.lx||dx}</text><text class="g-ts" x="200" y="128">Δy＝${o.ly||dy}</text>${t?`<text class="g-ts" x="200" y="144">公差域：直径 ${o.lt||t} の円</text>`:''}`;
+  s+=`<text class="g-ts" x="200" y="112">Δx＝${o.lx||dx}</text><text class="g-ts" x="200" y="128">Δy＝${o.ly||dy}</text>${t?`<text class="g-ts" x="200" y="144">公差域：直径${o.lt||t}の円</text>`:''}`;
   return{svg:s,vb:'0 0 320 160',cap:o.cap||(t?'位置度の公差域（円）と、測定した穴の中心':'真位置と、測定した穴の中心（図の縮尺は誇張）')};},
 
  // 動的公差線図（最大実体公差方式）：横軸は実寸法、縦軸は許される幾何公差
@@ -246,7 +246,7 @@ const FIG={
   s+=`<path class="g-zone" d="M${X(mms)} ${Y0}L${X(mms)} ${Y(t)}L${X(lms)} ${Y(tmax)}L${X(lms)} ${Y0}Z"/>`;
   s+=`<text class="g-ts" x="${X(mms)}" y="${Y0+13}" text-anchor="middle">${o.lmms||mms}（MMS）</text><text class="g-ts" x="${X(lms)}" y="${Y0+13}" text-anchor="middle">${o.llms||lms}（LMS）</text>`;
   s+=`<text class="g-ts" x="${X0-4}" y="${Y(t)+3}" text-anchor="end">${o.lt||t}</text><text class="g-ts" x="${X0-4}" y="${Y(tmax)+3}" text-anchor="end">${o.ltmax||+tmax.toFixed(3)}</text>`;
-  if(o.act!=null){const a=o.act,ya=Y(t+Math.abs(a-mms));s+=`<path class="g-hid" d="M${X(a)} ${Y0}V${ya}H${X0}"/><circle class="g-dot" cx="${X(a)}" cy="${ya}" r="3.4"/><text class="g-t" x="${X(a)+5}" y="${ya-6}">実寸法 ${o.lact||a}</text>`;}
+  if(o.act!=null){const a=o.act,ya=Y(t+Math.abs(a-mms));s+=`<path class="g-hid" d="M${X(a)} ${Y0}V${ya}H${X0}"/><circle class="g-dot" cx="${X(a)}" cy="${ya}" r="3.4"/><text class="g-t" x="${X(a)+5}" y="${ya-6}">実寸法${o.lact||a}</text>`;}
   s+=`<text class="g-ts" x="${X1}" y="${Y0+26}" text-anchor="end">${hole?'穴の実寸法 →':'軸の実寸法 →'}</text><text class="g-ts" x="${X0+4}" y="${Y1-8}">許される幾何公差</text>`;
   return{svg:s,vb:'0 0 320 160',cap:o.cap||'動的公差線図（塗りの範囲なら合格）'};},
 
@@ -254,11 +254,11 @@ const FIG={
  zone(o){
   let s='',cap='';
   if(o.k==='flat'){const p=(y)=>`M40 ${y}L200 ${y}L280 ${y-40}L120 ${y-40}Z`;
-    s=`<path class="g-zl" d="${p(118)}"/><path class="g-zl" d="${p(98)}"/><path class="g-act" d="M44 108C90 100 140 116 190 104S250 74 270 70"/><path class="g-thin" d="M298 98V118"/><text class="g-tr" x="303" y="112">t</text>`;cap='平面度の公差域：距離 t だけ離れた平行な2平面のあいだ';}
-  if(o.k==='round'){s=`<circle class="g-zl" cx="110" cy="80" r="56"/><circle class="g-zl" cx="110" cy="80" r="46"/><path class="g-act" d="M110 29C140 30 160 52 161 76S148 128 112 131S58 112 58 80S80 31 110 29Z"/><path class="g-thin" d="M156 80H166"/><text class="g-tr" x="172" y="84">t（半径の差）</text>`;cap='真円度の公差域：同じ断面で、半径の差が t の同心の2円のあいだ';}
-  if(o.k==='cylax'){s=`<ellipse class="g-zl" cx="60" cy="80" rx="8" ry="22"/><ellipse class="g-zl" cx="260" cy="80" rx="8" ry="22"/><path class="g-zl" d="M60 58H260M60 102H260"/><path class="g-act" d="M60 84C110 70 170 92 260 76"/><path class="g-ctr" d="M40 80H280"/><text class="g-tr" x="270" y="56">φt</text>`;cap='軸線の真直度（φ付き）の公差域：直径 t の円筒の中';}
-  if(o.k==='par'){s=`<path class="g-objf" d="M40 130H280V140H40Z"/><text class="g-tb" x="44" y="156">A</text><path class="g-zl" d="M40 50H280M40 74H280"/><path class="g-act" d="M40 64C100 56 160 70 220 58S270 66 280 60"/><path class="g-thin" d="M290 50V74"/><text class="g-tr" x="295" y="66">t</text>`;cap='平行度（面）の公差域：データム A に平行で、距離 t の2平面のあいだ';}
-  if(o.k==='run'){s=`<circle class="g-zl" cx="110" cy="80" r="52"/><circle class="g-zl" cx="110" cy="80" r="44"/><path class="g-act" d="M110 30C140 31 162 52 160 80S140 126 110 127S60 108 61 80S82 30 110 30Z"/><path class="g-ctr" d="M50 80H170M110 20V140"/><text class="g-ts" x="113" y="92">データム軸線</text><text class="g-tr" x="168" y="54">t</text>`;cap='円周振れの公差域：データム軸線に直角な各断面で、データム軸線を中心とする半径の差 t の2円のあいだ';}
+    s=`<path class="g-zl" d="${p(118)}"/><path class="g-zl" d="${p(98)}"/><path class="g-act" d="M44 108C90 100 140 116 190 104S250 74 270 70"/><path class="g-thin" d="M298 98V118"/><text class="g-tr" x="303" y="112">t</text>`;cap='平面度の公差域：距離tだけ離れた平行な2平面のあいだ';}
+  if(o.k==='round'){s=`<circle class="g-zl" cx="110" cy="80" r="56"/><circle class="g-zl" cx="110" cy="80" r="46"/><path class="g-act" d="M110 29C140 30 160 52 161 76S148 128 112 131S58 112 58 80S80 31 110 29Z"/><path class="g-thin" d="M156 80H166"/><text class="g-tr" x="172" y="84">t（半径の差）</text>`;cap='真円度の公差域：同じ断面で、半径の差がtの同心の2円のあいだ';}
+  if(o.k==='cylax'){s=`<ellipse class="g-zl" cx="60" cy="80" rx="8" ry="22"/><ellipse class="g-zl" cx="260" cy="80" rx="8" ry="22"/><path class="g-zl" d="M60 58H260M60 102H260"/><path class="g-act" d="M60 84C110 70 170 92 260 76"/><path class="g-ctr" d="M40 80H280"/><text class="g-tr" x="270" y="56">φt</text>`;cap='軸線の真直度（φ付き）の公差域：直径tの円筒の中';}
+  if(o.k==='par'){s=`<path class="g-objf" d="M40 130H280V140H40Z"/><text class="g-tb" x="44" y="156">A</text><path class="g-zl" d="M40 50H280M40 74H280"/><path class="g-act" d="M40 64C100 56 160 70 220 58S270 66 280 60"/><path class="g-thin" d="M290 50V74"/><text class="g-tr" x="295" y="66">t</text>`;cap='平行度（面）の公差域：データムAに平行で、距離tの2平面のあいだ';}
+  if(o.k==='run'){s=`<circle class="g-zl" cx="110" cy="80" r="52"/><circle class="g-zl" cx="110" cy="80" r="44"/><path class="g-act" d="M110 30C140 31 162 52 160 80S140 126 110 127S60 108 61 80S82 30 110 30Z"/><path class="g-ctr" d="M50 80H170M110 20V140"/><text class="g-ts" x="113" y="92">データム軸線</text><text class="g-tr" x="168" y="54">t</text>`;cap='円周振れの公差域：データム軸線に直角な各断面で、データム軸線を中心とする半径の差tの2円のあいだ';}
   return{svg:s,vb:'0 0 320 162',cap};}
 };
 // 解説の図：問題文・解説の言葉から図を1つ選ぶ（問題に図の指定があるときはそちらを使う）

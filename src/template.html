@@ -1,4 +1,4 @@
-<title>幾何公差ドリル｜JIS B 0021 の幾何公差を学ぶ無料問題集（非公式）</title>
+<title>幾何公差ドリル｜JIS B 0021の幾何公差を学ぶ無料問題集（非公式）</title>
 <style>
 /* レイアウト：方眼紙の地にマークシート型の解答欄。上部タブで5画面を切替える1カラムアプリ */
 :root{
@@ -15,7 +15,7 @@
   --paper:#10121a; --grid:rgba(154,166,240,.06); --card:#19212a; --ink:#e6ecf2; --ink2:#a9b5c1; --line:#2b3641;
   --accent:#9aa6f0; --accent-weak:#232846; --ng:#f07a70; --ng-weak:#3a1c1a; --ok:#57c483; --ok-weak:#163222; --streak:#e0a84a; --warn-weak:#36280f; --warn:#e3a84e; color-scheme:dark}
 *{box-sizing:border-box}
-body{background:var(--paper);background-image:linear-gradient(var(--grid) 1px,transparent 1px),linear-gradient(90deg,var(--grid) 1px,transparent 1px);background-size:20px 20px;color:var(--ink);font-family:var(--f-body);font-size:15px;line-height:1.7}
+body{text-autospace:normal;background:var(--paper);background-image:linear-gradient(var(--grid) 1px,transparent 1px),linear-gradient(90deg,var(--grid) 1px,transparent 1px);background-size:20px 20px;color:var(--ink);font-family:var(--f-body);font-size:15px;line-height:1.7}
 button{font:inherit;color:inherit}
 :focus-visible{outline:2px solid var(--accent);outline-offset:2px}
 .wrap{max-width:760px;margin:0 auto;padding-inline:16px;padding-block:0 48px}
@@ -783,10 +783,10 @@ function weekHTML(st){
   return `<div class="week">${[...Array(7)].map((_,i)=>{const d=addDays(t,i-6),k=dayKey(d),n=D[k]||0,ok=n>=st.goal,fz=st.used.has(k),isT=i===6;
     return `<div class="day ${ok?'ok':fz?'fz':''} ${isT?'today':''}" title="${k}：${n}問"><span class="w">${W[d.getDay()]}</span><span class="m">${ok?'✓':fz?'◆':isT?n:''}</span></div>`;}).join('')}</div>`;
 }
-function syncStreakChip(){const st=streakInfo(),c=$('#streakChip');if(!c)return;c.innerHTML=ICON.flame+st.cur;c.classList.toggle('on',st.done);c.setAttribute('aria-label',`連続 ${st.cur} 日${st.done?'（今日は達成）':''}`);}
+function syncStreakChip(){const st=streakInfo(),c=$('#streakChip');if(!c)return;c.innerHTML=ICON.flame+st.cur;c.classList.toggle('on',st.done);c.setAttribute('aria-label',`連続${st.cur}日${st.done?'（今日は達成）':''}`);}
 function streakSheet(){
   const st=streakInfo();
-  openG(`<div class="sheethead"><strong>連続 ${st.cur} 日</strong><button class="iconbtn" data-close aria-label="閉じる">${ICON.close}</button></div>
+  openG(`<div class="sheethead"><strong>連続${st.cur}日</strong><button class="iconbtn" data-close aria-label="閉じる">${ICON.close}</button></div>
   ${weekHTML(st)}
   <div class="crit"><div><div class="lbl">今日</div><div class="v">${st.today}／${st.goal}</div></div><div><div class="lbl">最長記録</div><div class="v">${st.best}日</div></div><div><div class="lbl">記録の保護</div><div class="v">${st.freeze}</div></div></div>
   <p class="note">1日の目標（${st.goal}問）を解いた日が1日に数えられます。7日続けるごとに「記録の保護」が1つ（最大2つ）たまり、できなかった日を1日だけ埋めます。目標の問題数は設定で変えられます。</p>`);
@@ -849,7 +849,7 @@ function finishPath(){
     const id=quiz.stage,o=P.path[id]||{s:0,b:0};o.b=Math.max(o.b,Math.round(r*100));
     const was=stageDone(id);
     if(r>=PATH_RULE.lessonPass){o.s=Math.min(3,o.s+1);P.path[id]=o;
-      const now=stageDone(id);quiz.pathMsg=now&&!was?`ステージ「${STAGES[id].name}」をクリア！`:`★ を1つ獲得（${o.s}／${PATH_RULE.starsToClear}）`;}
+      const now=stageDone(id);quiz.pathMsg=now&&!was?`ステージ「${STAGES[id].name}」をクリア`:`★ を1つ獲得（${o.s}／${PATH_RULE.starsToClear}）`;}
     else{P.path[id]=o;quiz.pathMsg=`7割以上で ★ を獲得できます。もう一度挑戦しましょう。`;}
   }
   if(quiz.ctest!=null){
@@ -857,7 +857,7 @@ function finishPath(){
     if(r>=PATH_RULE.testPass){
       // 飛び級：合格した章より前の章もまとめて修了にする
       for(let i=0;i<=ci;i++){if(PATH[i].final)continue;P.chap[PATH[i].id]=true;PATH[i].stages.forEach(s=>{const o=P.path[s.id]||{s:0,b:0};if(o.s<PATH_RULE.starsToClear)o.s=PATH_RULE.starsToClear;P.path[s.id]=o;});}
-      quiz.pathMsg=`${ch.title} 修了。称号「${ch.role}」を獲得しました。`;quiz.story=ch.clear;
+      quiz.pathMsg=`${ch.title}修了。称号「${ch.role}」を獲得しました。`;quiz.story=ch.clear;
     }else quiz.pathMsg=`合格は${PATH_RULE.testPass*100}%以上です。ステージで復習してから再挑戦しましょう。`;
   }
 }
@@ -950,7 +950,7 @@ function render(){
   const key=view==='drill'&&quiz?'q'+quiz.i+'/'+quiz.list.length:view==='mock'&&mock&&!mock.done?'m'+mock.i:'';
   if(key&&key!==lastCardKey){const c=m.querySelector('.qcard');if(c&&lastCardKey)c.classList.add('enter');}
   lastCardKey=key;
-  if(!focus)m.insertAdjacentHTML('beforeend',`<footer class="appfoot">幾何公差ドリル <span class="ver">v${APP.version}</span>（${APP.date} 更新）・非公式の学習教材です<br><span class="support"><a href="https://buymeacoffee.com/kotaooka" target="_blank" rel="noopener"><span aria-hidden="true">☕</span> 開発を応援する（Buy Me a Coffee）</a></span></footer>`);
+  if(!focus)m.insertAdjacentHTML('beforeend',`<footer class="appfoot">幾何公差ドリル <span class="ver">v${APP.version}</span>（${APP.date}更新）・非公式の学習教材です<br><span class="support"><a href="https://buymeacoffee.com/kotaooka" target="_blank" rel="noopener"><span aria-hidden="true">☕</span> 開発を応援する（Buy Me a Coffee）</a></span></footer>`);
 }
 
 function subtabs(g){
@@ -959,10 +959,10 @@ function subtabs(g){
 }
 // 今日の目標の円グラフ（SVG）
 // 結果画面の正答率の円
-function ringPct(p){const r=52,c=2*Math.PI*r;return `<svg viewBox="0 0 128 128" role="img" aria-label="正答率 ${p}%"><circle class="bg" cx="64" cy="64" r="${r}"/><circle class="fg" cx="64" cy="64" r="${r}" stroke-dasharray="${c}" stroke-dashoffset="${c*(1-p/100)}" transform="rotate(-90 64 64)"/><text x="64" y="72" text-anchor="middle">${p}<tspan font-size="16">%</tspan></text></svg>`;}
+function ringPct(p){const r=52,c=2*Math.PI*r;return `<svg viewBox="0 0 128 128" role="img" aria-label="正答率${p}%"><circle class="bg" cx="64" cy="64" r="${r}"/><circle class="fg" cx="64" cy="64" r="${r}" stroke-dasharray="${c}" stroke-dashoffset="${c*(1-p/100)}" transform="rotate(-90 64 64)"/><text x="64" y="72" text-anchor="middle">${p}<tspan font-size="16">%</tspan></text></svg>`;}
 function ringSVG(v,goal){
   const r=40,c=2*Math.PI*r,p=Math.min(1,v/goal);
-  return `<svg class="ring" viewBox="0 0 96 96" role="img" aria-label="今日 ${v}／${goal} 問"><circle class="bg" cx="48" cy="48" r="${r}"/><circle class="fg" cx="48" cy="48" r="${r}" stroke-dasharray="${c}" stroke-dashoffset="${c*(1-p)}" transform="rotate(-90 48 48)"/><text x="48" y="50" font-size="22">${v}</text><text x="48" y="68" font-size="11" opacity=".85">／${goal}問</text></svg>`;
+  return `<svg class="ring" viewBox="0 0 96 96" role="img" aria-label="今日${v}／${goal}問"><circle class="bg" cx="48" cy="48" r="${r}"/><circle class="fg" cx="48" cy="48" r="${r}" stroke-dasharray="${c}" stroke-dashoffset="${c*(1-p)}" transform="rotate(-90 48 48)"/><text x="48" y="50" font-size="22">${v}</text><text x="48" y="68" font-size="11" opacity=".85">／${goal}問</text></svg>`;
 }
 function homeHTML(){
   const all=Object.values(P.stats).reduce((a,s)=>({c:a.c+s.c,n:a.n+s.c+s.w}),{c:0,n:0});
@@ -983,14 +983,14 @@ function homeHTML(){
       </div>
       ${ringSVG(st.today,st.goal)}
     </div>
-    <div class="goalline">${ICON.flame}<span>${st.done?`今日の目標を達成。連続 ${st.cur} 日`:st.cur?`あと ${st.goal-st.today} 問で連続 ${st.cur+1} 日目`:`あと ${st.goal-st.today} 問で連続記録がスタート`}${st.freeze?`・保護 ${st.freeze}`:''}</span></div>
+    <div class="goalline">${ICON.flame}<span>${st.done?`今日の目標を達成。連続${st.cur}日`:st.cur?`あと${st.goal-st.today}問で連続${st.cur+1}日目`:`あと${st.goal-st.today}問で連続記録がスタート`}${st.freeze?`・保護${st.freeze}`:''}</span></div>
   </section>
   <div class="panel" style="margin-top:12px;padding:12px">${weekHTML(st)}</div>
 
   ${resumeBannerHTML()}
   ${(()=>{const due=dueIds().length;
     // いちばん大きなボタン：今日の復習があれば復習、なければロードの続き
-    const main=due?{a:'data-act="review"',t:`今日の復習 ${due}問`,s:'忘れかけた問題から解きます',ic:ICON.redo}:{a:cont.a,t:ns?`続きから：${cont.t}`:cont.t,s:cont.s,ic:ICON.flag};
+    const main=due?{a:'data-act="review"',t:`今日の復習${due}問`,s:'忘れかけた問題から解きます',ic:ICON.redo}:{a:cont.a,t:ns?`続きから：${cont.t}`:cont.t,s:cont.s,ic:ICON.flag};
     return `<button class="primary" ${main.a}><span class="ic">${main.ic}</span><span style="min-width:0"><b>${esc(main.t)}</b><span>${esc(main.s)}</span></span><span class="go">${ICON.chev}</span></button>`;})()}
 
   <h2>ほかの演習</h2>
@@ -999,10 +999,10 @@ function homeHTML(){
     ${(()=>{const m=markedItems(),n=m.filter(i=>i.kind!=='x').length+new Set(m.filter(i=>i.kind==='x').map(i=>i.set)).size;
       return n?`<button class="lrow" data-act="marks"><span class="ic">${ICON.star}</span><span><b>あとで見る</b><span>登録した${n}問（大問は1問と数える）</span></span>${ICON.chev}</button>`:'';})()}
     <button class="lrow" data-act="godrill"><span class="ic">${ICON.sheet}</span><span><b>種類を選んで解く</b><span>知識・計算・図面を読む・記入枠を組む・検図・合否判定</span></span>${ICON.chev}</button>
-    <button class="lrow" data-act="flash"><span class="ic">${ICON.bolt}</span><span><b>記号フラッシュ</b><span>14の記号をタイムアタック${(P.flash||{}).best?`・自己ベスト ${P.flash.best.toFixed(1)} 秒`:''}</span></span>${ICON.chev}</button>
+    <button class="lrow" data-act="flash"><span class="ic">${ICON.bolt}</span><span><b>記号フラッシュ</b><span>14の記号をタイムアタック${(P.flash||{}).best?`・自己ベスト${P.flash.best.toFixed(1)}秒`:''}</span></span>${ICON.chev}</button>
     ${(()=>{// 実力診断は、まだ受けていないか、前回から30日以上たったときだけ案内する
       const d=P.mocks.filter(h=>h.f).slice(-1)[0],days=d?Math.floor((Date.now()-d.t)/864e5):null;
-      return d&&days<30?'':`<button class="lrow" data-act="gomock"><span class="ic">${ICON.timer}</span><span><b>${d?'そろそろ実力診断を':'実力診断を受ける'}</b><span>${d?`前回から ${days} 日。いまの弱い項目を確かめる`:'全分野から約40問・弱い項目が分かる'}</span></span>${ICON.chev}</button>`;})()}
+      return d&&days<30?'':`<button class="lrow" data-act="gomock"><span class="ic">${ICON.timer}</span><span><b>${d?'そろそろ実力診断を':'実力診断を受ける'}</b><span>${d?`前回から${days}日。いまの弱い項目を確かめる`:'全分野から約40問・弱い項目が分かる'}</span></span>${ICON.chev}</button>`;})()}
   </div>
   <p class="status" style="margin-inline:4px">${store.mode==='cloud'?'進捗はアカウントに保存されます（別の端末でも続きから）。':'進捗はこの端末に保存されます。'}</p>`;
 }
@@ -1012,7 +1012,7 @@ const ZIG=[0,56,84,56,0,-56,-84,-56];
 function roadHTML(){
   const all=Object.keys(STAGES).length,done=Object.keys(STAGES).filter(stageDone).length;
   let k=0;
-  return `<div class="panel" style="margin-top:12px"><div class="rolebar"><div style="min-width:0"><div class="lbl">いまの称号</div><b style="font-size:1.1rem">${esc(role())}</b></div><div class="meter" aria-label="ステージ ${done}／${all}"><i style="width:${done/all*100}%"></i></div><span class="timer" style="font-size:.9rem">${done}/${all}</span></div></div>
+  return `<div class="panel" style="margin-top:12px"><div class="rolebar"><div style="min-width:0"><div class="lbl">いまの称号</div><b style="font-size:1.1rem">${esc(role())}</b></div><div class="meter" aria-label="ステージ${done}／${all}"><i style="width:${done/all*100}%"></i></div><span class="timer" style="font-size:.9rem">${done}/${all}</span></div></div>
   ${PATH.map((ch,ci)=>{const open=chapOpen(ci),cd=chapDone(ch);
     const nodes=ch.stages.map(sg=>{const S=STAGES[sg.id],o=stageOpen(S),d=stageDone(sg.id),cur=o&&!d&&nextStage()&&nextStage().id===sg.id,n=stars(sg.id);
       const x=ZIG[(k++)%ZIG.length];
@@ -1068,7 +1068,7 @@ function drillSetupHTML(){
   <div style="display:grid;gap:12px">
     <div><div class="lbl">問題の種類</div>${seg('kind',[['all','すべて'],['k','知識'],['g','計算'],['x','図面を読む'],['f','記入枠を組む'],['c','検図']])}</div>
     <div><div class="lbl">問題数</div>${seg('count',[[10,'10問'],[20,'20問'],[30,'30問']])}</div>
-    <p class="note" style="margin:0">対象 ${n} 問（計算問題は毎回数値が変わります${'xfc'.includes(drill.kind)?'。大問は空欄の数だけ問題を数え、大問単位で出すため、問題数が少し増えることがあります':''}）</p>
+    <p class="note" style="margin:0">対象${n}問（計算問題は毎回数値が変わります${'xfc'.includes(drill.kind)?'。大問は空欄の数だけ問題を数え、大問単位で出すため、問題数が少し増えることがあります':''}）</p>
     <div><button class="btn" data-act="startdrill" ${n?'':'disabled'}>演習を始める</button></div>
   </div></details>`;
 }
@@ -1105,7 +1105,7 @@ function askQuit(){
   const done=quiz.list.filter(x=>x.checked).length;
   if(!done){quitQuiz();return;}
   openG(`<div class="sheethead"><strong>演習をやめますか？</strong><button class="iconbtn" data-close aria-label="閉じる">${ICON.close}</button></div>
-  <p>ここでやめると、この演習の進み具合（${quiz.list.length}問中 ${done}問 解答）は<b>リセット</b>され、続きから再開できません。</p>
+  <p>ここでやめると、この演習の進み具合（${quiz.list.length}問中${done}問 解答）は<b>リセット</b>され、続きから再開できません。</p>
   <p class="note">解答済みの問題の正誤は、成績と復習の予定に残ります。</p>
   <div class="ractions"><button class="btn block" data-close>続ける</button><button class="btn danger block" data-quitok>やめる（リセット）</button></div>`);
 }
@@ -1135,7 +1135,7 @@ function qCard(it,idx,total,reveal){
     ${x&&!it.ox?`<div class="lbl" style="margin-bottom:6px">（${it.k+1}）に入る最も適切なものを選べ</div>`:''}
     <div class="opts${x&&!it.ox?' many':''}">${it.choices.map((ch,j)=>{let cl='opt';if(reveal){if(j===it.ans)cl+=' right';else if(j===it.pick)cl+=' wrong';}else if(j===it.pick)cl+=' sel';
       return `<button class="${cl}" data-pick="${j}" ${reveal?'disabled':''}><span class="bub">${L[j]}</span><span class="tx">${esc(ch)}</span></button>`;}).join('')}</div>
-    ${reveal?(()=>{const ok=it.pick===it.ans;return `<div class="fb ${ok?'ok':'ng'}"><div class="res">${ok?'解説':'正答は '+L[it.ans]+(x&&!it.ox?' '+esc(it.choices[it.ans]):'')}</div>${exBody(it.ex,it.exfig?figQ(it.exfig):figFor(it.q+' '+it.ex),!ok)}${refLine(it.cat)}${view==='drill'?reportBox(it):''}</div>`;})():''}
+    ${reveal?(()=>{const ok=it.pick===it.ans;return `<div class="fb ${ok?'ok':'ng'}"><div class="res">${ok?'解説':'正答は'+L[it.ans]+(x&&!it.ox?' '+esc(it.choices[it.ans]):'')}</div>${exBody(it.ex,it.exfig?figQ(it.exfig):figFor(it.q+' '+it.ex),!ok)}${refLine(it.cat)}${view==='drill'?reportBox(it):''}</div>`;})():''}
   </div>`;
 }
 // 総合問題の大問：同じ大問の空欄が続く範囲 [s, e) を返す（大問以外は1問だけ）
@@ -1184,10 +1184,10 @@ function groupCard(list,s,e,act,reveal,inDrill){
     const optsHTML=`<div class="opts many${S.type!=='fcf'&&S.opts.every(o=>optText(o).length<=8)?' short':''}">${S.opts.map((o,j)=>{const used=items.filter(it=>it.pick===j).map(it=>it.k+1);
       return `<button class="opt ${!reveal&&cur.pick===j?'sel':''}" data-gpick="${j}" ${reveal?'disabled':''}><span class="bub">${KANA[j]}</span><span class="tx">${optHTML(o)}${used.length?`<small class="used">${used.map(n=>'（'+n+'）').join('')}</small>`:''}</span></button>`;}).join('')}</div>`;
     body=`<div class="qtext dai">${fcf?esc(S.stem):stem}</div>${fcf&&S.fig?figQ(S.fig):''}${frame}
-    ${reveal?optsHTML:`<div class="odock"><div class="ghint"><b>（${cur.k+1}）</b>${fcf?'の区画':''}に入るものを選んでください<span>${filled}／${items.length} 入力済み</span></div>${optsHTML}</div>`}`;
+    ${reveal?optsHTML:`<div class="odock"><div class="ghint"><b>（${cur.k+1}）</b>${fcf?'の区画':''}に入るものを選んでください<span>${filled}／${items.length}入力済み</span></div>${optsHTML}</div>`}`;
   }
-  const exs=reveal?`<div class="fb ${nOk===items.length?'ok':'ng'}"><div class="res">${items.length}問中 ${nOk}問 正解</div>${items.map(it=>{const ok=it.pick===it.ans,L=ox?OXL:KANA;
-      return `<div class="gex ${ok?'ok':'ng'}"><b>（${it.k+1}）${ok?'✓':'✕'} 正答 ${L[it.ans]}${ox?'':' '+optHTML(S.opts[it.ans])}</b><p>${esc(it.ex)}</p></div>`;}).join('')}${S.type==='fcf'?figQ(['fcf',fcfSpec(S)]):figFor(S.title+' '+(S.stem||'')+' '+items.map(x=>x.ex).join(' '))}${refLine(items[0].cat)}${inDrill?reportBox(items[0]):''}</div>`:'';
+  const exs=reveal?`<div class="fb ${nOk===items.length?'ok':'ng'}"><div class="res">${items.length}問中${nOk}問 正解</div>${items.map(it=>{const ok=it.pick===it.ans,L=ox?OXL:KANA;
+      return `<div class="gex ${ok?'ok':'ng'}"><b>（${it.k+1}）${ok?'✓':'✕'}正答${L[it.ans]}${ox?'':' '+optHTML(S.opts[it.ans])}</b><p>${esc(it.ex)}</p></div>`;}).join('')}${S.type==='fcf'?figQ(['fcf',fcfSpec(S)]):figFor(S.title+' '+(S.stem||'')+' '+items.map(x=>x.ex).join(' '))}${refLine(items[0].cat)}${inDrill?reportBox(items[0]):''}</div>`:'';
   // 穴埋めは本文（空欄）を先に見せ、図はその下に置く（選択肢の欄が画面の下に固定されるため）。記入枠の組み立ては、本文→図→記入枠の順にする
   return `<div class="qcard">${head}${S.fig&&figTop?figQ(S.fig):''}${body}${S.fig&&!figTop&&S.type!=='fcf'?figQ(S.fig):''}${exs}</div>`;
 }
@@ -1200,7 +1200,7 @@ function quizHTML(){
     const nxt=quiz.stage&&ns&&ns.id!==quiz.stage?{a:`data-stage="${ns.id}"`,t:`次のステージへ：${ns.name}`}:due?{a:'data-act="review"',t:`今日の復習へ（${due}問）`}:null;
     return `<div class="result ${good?'good':'bad'}">
       <div class="rring">${ringPct(p)}</div>
-      <div class="rtitle">${good?(p===100?'全問正解！':'よくできました'):'あと少し'}</div>
+      <div class="rtitle">${good?(p===100?'全問正解':'よくできました'):'あと少し'}</div>
       <div class="rsub">${esc(quiz.label)}</div>
       <div class="rstats">
         <div><span>正解</span><b>${c}<small>／${n}</small></b></div>
@@ -1223,13 +1223,13 @@ function quizHTML(){
     return `<div class="qtop"><button class="iconbtn" data-act="quitquiz" aria-label="やめる（進み具合はリセット）">${ICON.close}</button><div class="prog"><i style="width:${(rev?ge:gs)/quiz.list.length*100}%"></i></div><span class="cnt">${gs+1}${ge-gs>1?'–'+ge:''}/${quiz.list.length}</span><button class="iconbtn" data-act="calc" aria-label="電卓">${ICON.calc}</button><button class="iconbtn" data-act="sheet" aria-label="早見表">${ICON.table}</button></div>
     ${groupCard(quiz.list,gs,ge,quiz.act,rev,true)}
     <div class="actionbar ${rev?(full?'ok':'ng'):''}"><div class="in">
-    ${rev?`<div class="msg"><span class="mk" aria-hidden="true">${full?'✓':nOk?'△':'✕'}</span><span>${full?esc(it.praise||'全問正解！'):`${items.length}問中 ${nOk}問 正解`}</span></div><button class="btn" data-act="next">${ge<quiz.list.length?'続ける':'結果を見る'}</button>`
+    ${rev?`<div class="msg"><span class="mk" aria-hidden="true">${full?'✓':nOk?'△':'✕'}</span><span>${full?esc(it.praise||'全問正解'):`${items.length}問中${nOk}問 正解`}</span></div><button class="btn" data-act="next">${ge<quiz.list.length?'続ける':'結果を見る'}</button>`
          :`<button class="btn block" data-act="gcheck" ${allF?'':'disabled'}>${allF?'まとめて確認する':`確認する（${items.filter(x=>x.pick!=null).length}／${items.length}）`}</button>`}</div></div>`;
   }
   return `<div class="qtop"><button class="iconbtn" data-act="quitquiz" aria-label="やめる（進み具合はリセット）">${ICON.close}</button><div class="prog" role="progressbar" aria-valuenow="${quiz.i+(rev?1:0)}" aria-valuemax="${quiz.list.length}"><i style="width:${(quiz.i+(rev?1:0))/quiz.list.length*100}%"></i></div><span class="cnt">${quiz.i+1}/${quiz.list.length}</span><button class="iconbtn" data-act="calc" aria-label="電卓">${ICON.calc}</button><button class="iconbtn" data-act="sheet" aria-label="早見表">${ICON.table}</button></div>
   ${qCard(it,quiz.i,quiz.list.length,rev)}
   <div class="actionbar ${rev?(ok?'ok':'ng'):''}" role="${rev?'status':''}"><div class="in">
-  ${rev?`<div class="msg"><span class="mk" aria-hidden="true">${ok?'✓':'✕'}</span><span>${ok?esc(it.praise||'正解！'):'不正解'}${ok&&it.streak>=3?`<br><small style="font-weight:400">${it.streak}問連続正解</small>`:''}</span></div><button class="btn" data-act="next">${quiz.i+1<quiz.list.length?'続ける':'結果を見る'}</button>`
+  ${rev?`<div class="msg"><span class="mk" aria-hidden="true">${ok?'✓':'✕'}</span><span>${ok?esc(it.praise||'正解'):'不正解'}${ok&&it.streak>=3?`<br><small style="font-weight:400">${it.streak}問連続正解</small>`:''}</span></div><button class="btn" data-act="next">${quiz.i+1<quiz.list.length?'続ける':'結果を見る'}</button>`
        :`<button class="btn block" data-act="check" ${it.pick==null?'disabled':''}>確認する</button>`}</div></div>`;
 }
 
@@ -1239,7 +1239,7 @@ const DIAG_N=()=>FK.reduce((a,k)=>a+DIAG.n[k],0);
 // 中断した実力診断の「続きから再開」（ホームと実力診断の開始画面に出す）
 function resumeBannerHTML(){const ses=loadSession();if(!ses)return '';const L=ses.k==='mock'?ses.m.list:ses.q.list,i=ses.k==='mock'?ses.m.list.filter(x=>x.pick!=null).length:ses.q.i,lab=ses.k==='mock'?'実力診断':ses.q.label;
     const left=null;
-    return `<div class="panel resume" role="region" aria-label="中断した演習"><button class="cont" data-act="resume"><span class="ic">${ICON.resume}</span><span style="min-width:0"><span class="t">続きから再開：${esc(lab)}</span><br><span class="s">${i}／${L.length} 問まで解答${left!=null?`・残り ${left} 分（時間は進んでいます）`:''}</span></span><span class="go">${ICON.chev}</span></button><button class="linkbtn" data-act="dropsession" style="margin-top:6px">この続きを破棄する</button></div>`;}
+    return `<div class="panel resume" role="region" aria-label="中断した演習"><button class="cont" data-act="resume"><span class="ic">${ICON.resume}</span><span style="min-width:0"><span class="t">続きから再開：${esc(lab)}</span><br><span class="s">${i}／${L.length}問まで解答${left!=null?`・残り${left}分（時間は進んでいます）`:''}</span></span><span class="go">${ICON.chev}</span></button><button class="linkbtn" data-act="dropsession" style="margin-top:6px">この続きを破棄する</button></div>`;}
 function mockStartHTML(){
   const hist=P.mocks.filter(h=>h.f).slice(-5).reverse();
   const fcell=(h,k)=>h.f[k]==null?'—':h.f[k]+'%';
@@ -1251,7 +1251,7 @@ function mockStartHTML(){
   </div>
   <h2>出題コードで受ける（教育用）</h2>
   <div class="panel">
-    <p class="note" style="margin-top:0">同じ出題コードで受けると、だれが受けても同じ問題・同じ数値・同じ選択肢の順になります。新人教育などで結果を比べるときに使います。コードを空にして始めると、新しいコードを作ります（結果の画面と画像にコードが出るので、それを受講者に伝えてください）。アプリの版（いまは v${APP.version}）が違うと、同じコードでも問題が変わることがあります。</p>
+    <p class="note" style="margin-top:0">同じ出題コードで受けると、だれが受けても同じ問題・同じ数値・同じ選択肢の順になります。新人教育などで結果を比べるときに使います。コードを空にして始めると、新しいコードを作ります（結果の画面と画像にコードが出るので、それを受講者に伝えてください）。アプリの版（いまはv${APP.version}）が違うと、同じコードでも問題が変わることがあります。</p>
     <label class="srow col"><span class="t"><b>出題コード</b><span>英数字（大文字・小文字は区別しない）</span></span><input type="text" id="mockCode" maxlength="12" autocomplete="off" autocapitalize="characters" placeholder="例：K7QF2M"></label>
     <div class="actions" style="margin-top:8px"><button class="btn tonal" data-act="mockcode">出題コードで始める</button></div>
   </div>
@@ -1291,12 +1291,12 @@ function mockHTML(){
   const it=mock.list[mock.i],answered=mock.list.filter(x=>x.pick!=null).length;
   const [gs,ge]=grpRange(mock.list,mock.i);
   if(it.kind==='x'&&(mock.act==null||mock.act<gs||mock.act>=ge))mock.act=firstOpen(mock.list,gs,ge);
-  return `<div class="mockhead"><span class="timer-lbl" style="font-weight:700">問 ${gs+1}${ge-gs>1?'–'+ge:''}<span class="note" style="margin:0"> / ${mock.list.length}・解答済み ${answered}</span></span><button class="iconbtn" data-act="calc" aria-label="電卓">${ICON.calc}</button><button class="iconbtn" data-act="sheet" aria-label="早見表">${ICON.table}</button></div>
+  return `<div class="mockhead"><span class="timer-lbl" style="font-weight:700">問${gs+1}${ge-gs>1?'–'+ge:''}<span class="note" style="margin:0"> / ${mock.list.length}・解答済み${answered}</span></span><button class="iconbtn" data-act="calc" aria-label="電卓">${ICON.calc}</button><button class="iconbtn" data-act="sheet" aria-label="早見表">${ICON.table}</button></div>
   <div class="qtop" style="margin:0 0 8px"><div class="prog"><i style="width:${answered/mock.list.length*100}%"></i></div></div>
   ${it.kind==='x'?groupCard(mock.list,gs,ge,mock.act,false,false):qCard(it,mock.i,mock.list.length,false)}
   <div class="actionbar"><div class="in row"><button class="btn ghost" data-act="mprev" ${gs?'':'disabled'}>前へ</button><button class="btn block" data-act="mnext">${ge<mock.list.length?'次へ':'見直しへ'}</button></div></div>
-  <div class="panel" style="margin-top:12px"><div class="lbl" style="display:flex;justify-content:space-between"><span>問題一覧</span><span>解答済み ${answered}／${mock.list.length}</span></div>${secListHTML(false,gs)}
-  ${mock.confirm?`<div class="confirm">未解答が ${mock.list.length-answered} 問あります。採点しますか？<div class="actions" style="margin-top:8px"><button class="btn danger" data-act="mfinish">採点する</button><button class="btn ghost" data-act="mcancel">戻る</button></div></div>`:`<div class="actions" style="margin-top:12px"><button class="btn danger" data-act="mfinishask">終了して採点</button></div>`}</div>`;
+  <div class="panel" style="margin-top:12px"><div class="lbl" style="display:flex;justify-content:space-between"><span>問題一覧</span><span>解答済み${answered}／${mock.list.length}</span></div>${secListHTML(false,gs)}
+  ${mock.confirm?`<div class="confirm">未解答が${mock.list.length-answered}問あります。採点しますか？<div class="actions" style="margin-top:8px"><button class="btn danger" data-act="mfinish">採点する</button><button class="btn ghost" data-act="mcancel">戻る</button></div></div>`:`<div class="actions" style="margin-top:12px"><button class="btn danger" data-act="mfinishask">終了して採点</button></div>`}</div>`;
 }
 function finishMock(){
   if(!mock||mock.done)return;mock.done=true;try{localStorage.removeItem('gdt-session');}catch(e){}
@@ -1327,23 +1327,23 @@ function secListHTML(result,cur){
     return `<div class="msec"><div class="msech">${esc((FIELDS.find(F=>F.k===g.field)||{name:g.field}).name)}<span>${n}問</span></div>${g.secs.map(c=>{
       const its=L.slice(c.s,c.e),k=c.e-c.s,done=its.filter(x=>x.pick!=null).length,ok=its.filter(x=>x.pick===x.ans).length;
       const st=result?(ok===k?'r':ok===0?'w':'part'):(done===k?'done':done?'part':'');
-      return `<div class="mrow ${!result&&cur===c.s?'cur':''}"><button class="mhead ${st}" ${result?`data-mview="${c.s}"`:`data-jump="${c.s}"`}><b>第${c.no}問</b><span class="t">${esc(c.title)}${c.ox&&!/正誤/.test(c.title)?'（正誤）':''}</span><span class="cnt">${result?`${ok}／${k} 正解`:`${done}／${k}`}</span></button>
+      return `<div class="mrow ${!result&&cur===c.s?'cur':''}"><button class="mhead ${st}" ${result?`data-mview="${c.s}"`:`data-jump="${c.s}"`}><b>第${c.no}問</b><span class="t">${esc(c.title)}${c.ox&&!/正誤/.test(c.title)?'（正誤）':''}</span><span class="cnt">${result?`${ok}／${k}正解`:`${done}／${k}`}</span></button>
         <div class="qgrid">${its.map((x,t)=>{const j=c.s+t;return result?`<button class="${x.pick===x.ans?'r':'w'}" data-mview="${j}" aria-label="問${j+1}">${j+1}</button>`
           :`<button data-jump="${j}" class="${x.pick!=null?'done':''}" aria-label="問${j+1}${x.pick!=null?' 解答済み':''}">${j+1}</button>`;}).join('')}</div></div>`;}).join('')}</div>`;}).join('');
 }
 function mockResultHTML(){
   const r=mock.res,filter=mock.filter||'wrong',prev=r.prev;
   const rows=mock.list.map((x,j)=>({x,j})).filter(o=>filter==='all'||o.x.pick!==o.x.ans);
-  const delta=(v,p)=>p==null?'':`<span class="note" style="margin:0 0 0 6px">${v-p>=0?'+':''}${v-p}（前回 ${p}%）</span>`;
+  const delta=(v,p)=>p==null?'':`<span class="note" style="margin:0 0 0 6px">${v-p>=0?'+':''}${v-p}（前回${p}%）</span>`;
   const weak=r.items.filter(o=>o.c<o.n).sort((a,b)=>a.c/a.n-b.c/b.n||b.n-a.n).slice(0,8);
   const nWrong=mock.list.filter(x=>x.pick!==x.ans).length;
   return `<h2>実力診断の結果</h2>
   <div class="panel">
     <div class="kpis" style="margin:0 0 10px"><div class="panel kpi"><div class="lbl">総合</div><div class="v" style="color:${r.tot>=70?'var(--ok)':'var(--ng)'}">${r.tot}<small>%</small></div></div></div>
-    <p class="note" style="margin-top:0">${mock.list.length}問中 ${mock.list.length-nWrong}問 正解・所要時間 約${r.used}分${prev?delta(r.tot,prev.tot):''}</p>
+    <p class="note" style="margin-top:0">${mock.list.length}問中${mock.list.length-nWrong}問 正解・所要時間 約${r.used}分${prev?delta(r.tot,prev.tot):''}</p>
     ${mock.code?`<p class="note" style="margin-top:0">出題コード <b class="code">${esc(mock.code)}</b>（v${esc(mock.ver||APP.version)}）：同じコードで受けると同じ問題になります</p>`:''}
     ${FIELDS.filter(F=>r.f[F.k]!=null).map(F=>{const v=r.f[F.k];return `<div class="catrow"><span class="nm">${esc(F.name)}${prev&&prev.f&&prev.f[F.k]!=null?`<span class="n" style="color:var(--${v>=prev.f[F.k]?'ok':'ucl'})"> ${v-prev.f[F.k]>=0?'+':''}${v-prev.f[F.k]}</span>`:''}</span><span class="pc">${v}%</span><div class="meter"><i class="${v<70?'low':''}" style="width:${v}%"></i></div></div>`;}).join('')}
-    <p class="note">赤は 70% 未満の分野。</p>
+    <p class="note">赤は70%未満の分野。</p>
   </div>
   ${weak.length?`<h2>弱い項目</h2><div class="panel"><p class="note" style="margin-top:0">今回まちがえた問題が含まれる項目です。「演習」でその項目だけを出題します。</p>${weak.map(o=>`<div class="sylrow"><div class="nm">${esc(o.name)}<span class="lv">${esc(o.f)}</span></div><div class="num">${o.c}／${o.n}</div><div class="num low">${pct(o.c,o.n)}%</div><button class="btn ghost sm" data-syl="${o.key}">演習</button></div>`).join('')}</div>`:''}
   ${nWrong?`<div class="actions" style="margin:12px 0"><button class="btn" data-act="diagwrong">まちがえた問題を解き直す（${nWrong}問）</button></div>`:''}
@@ -1360,7 +1360,7 @@ function mockResultHTML(){
 // 問題や解説の誤りに気づいたらメモを残す。成績タブで一覧・コピーできる（作成者への送信機能はない）
 function reportBox(it){
   const done=(P.reports||[]).some(r=>r.id===it.id&&r.q===it.q);
-  if(quiz&&quiz.reportFor===quiz.i)return `<div class="report"><label class="lbl" for="rpNote">どこが誤りだと思うか</label><textarea id="rpNote" rows="3" placeholder="例：解説の計算で 0.632 は 0.6325 の丸めでは？"></textarea><div class="actions"><a class="btn sm" data-gh="form" href="${esc(ghIssueURL(it,''))}" target="_blank" rel="noopener">GitHub で報告</a><button class="btn ghost sm" data-act="rpsave">端末に保存</button><button class="btn ghost sm" data-act="rpcancel">やめる</button></div><p class="note" style="margin:6px 0 0">「GitHub で報告」は、問題の内容を書き込んだ報告ページを開きます（GitHub のアカウントが必要）。アカウントがなければ「端末に保存」して、成績タブからコピーして送ってください。</p></div>`;
+  if(quiz&&quiz.reportFor===quiz.i)return `<div class="report"><label class="lbl" for="rpNote">どこが誤りだと思うか</label><textarea id="rpNote" rows="3" placeholder="例：解説の計算で0.632は0.6325の丸めでは？"></textarea><div class="actions"><a class="btn sm" data-gh="form" href="${esc(ghIssueURL(it,''))}" target="_blank" rel="noopener">GitHubで報告</a><button class="btn ghost sm" data-act="rpsave">端末に保存</button><button class="btn ghost sm" data-act="rpcancel">やめる</button></div><p class="note" style="margin:6px 0 0">「GitHubで報告」は、問題の内容を書き込んだ報告ページを開きます（GitHubのアカウントが必要）。アカウントがなければ「端末に保存」して、成績タブからコピーして送ってください。</p></div>`;
   const mk=isMarked(it);
   return `<div class="actions" style="margin-top:10px"><button class="btn ghost sm" data-act="mark" aria-pressed="${mk}">${mk?'★ あとで見る（登録済み）':'☆ あとで見る'}</button><button class="btn ghost sm" data-act="rpopen">${done?'報告済み（追加で報告）':'誤りを報告'}</button></div>`;
 }
@@ -1368,7 +1368,7 @@ function reportBox(it){
 function ghIssueURL(it,note){
   const cut=(t,n)=>{t=String(t||'');return t.length>n?t.slice(0,n)+'…':t;};
   const ex=Array.isArray(it.ex)?it.ex.join(' '):it.ex;
-  const body=[`- ID：${it.id}`,`- 分野：${CATS[it.cat]?CATS[it.cat].name:it.cat}`,`- 版：v${APP.version}（${APPB()?'Android アプリ':'Web 版'}）`,'',
+  const body=[`- ID：${it.id}`,`- 分野：${CATS[it.cat]?CATS[it.cat].name:it.cat}`,`- 版：v${APP.version}（${APPB()?'Androidアプリ':'Web版'}）`,'',
     '### 問題文',cut(it.q,700),'','### 選択肢',it.choices.map((c,j)=>`${j===it.ans?'**（正答）**':'-'} ${c}`).join('\n'),'',
     '### 解説',cut(ex,400),'','### どこが誤りだと思うか',note||'（ここに書いてください）'].join('\n');
   const title=`[問題の誤り] ${it.id}：${cut(String(it.q).replace(/\s+/g,' '),40)}`;
@@ -1407,14 +1407,14 @@ function statsHTML(){
   const kp=(lab,x)=>{const p=pct(x.c,x.n);return `<div class="panel kpi"><div class="lbl">${lab}</div><div class="v" style="color:${p==null?'var(--ink2)':p>=70?'var(--ok)':'var(--ng)'}">${p==null?'—':p}<small>${p==null?'':'%'}</small></div></div>`;};
   return `<h2>現在の正答率</h2>
   <div class="kpis">${kp('総合',all)}</div>
-  <p class="note" style="margin-inline:4px">解答数 ${all.n} 問。赤は 70% 未満の分野。</p>
+  <p class="note" style="margin-inline:4px">解答数${all.n}問。赤は70%未満の分野。</p>
   <div class="panel fields">${FIELDS.map(F=>{const x=f[F.k],p=pct(x.c,x.n);return `<details class="fdet"><summary><div class="catrow"><span class="nm">${esc(F.name)} <span class="n">${x.n}回</span></span><span class="pc">${p==null?'—':p+'%'}</span><div class="meter"><i class="${p!=null&&p<70?'low':''}" style="width:${p||0}%"></i></div></div></summary><div class="sub">${rows(F.k)}</div></details>`;}).join('')}<p class="note" style="margin:6px 0 0">分野をタップすると、分類ごとの正答率が開きます。</p></div>
-  ${last&&last.f?`<h2>直近の実力診断</h2><div class="panel"><div class="lbl">${new Date(last.t).toLocaleDateString('ja-JP')}</div><div class="timer" style="font-size:1.4rem;margin:4px 0 8px">総合 ${last.tot}%</div>${FIELDS.filter(F=>last.f[F.k]!=null).map(F=>`<div class="catrow"><span class="nm">${esc(F.name)}</span><span class="pc">${last.f[F.k]}%</span><div class="meter"><i class="${last.f[F.k]<70?'low':''}" style="width:${last.f[F.k]}%"></i></div></div>`).join('')}<div class="actions" style="margin-top:8px"><button class="btn ghost sm" data-act="gomock">実力診断を受ける</button></div></div>`:''}
+  ${last&&last.f?`<h2>直近の実力診断</h2><div class="panel"><div class="lbl">${new Date(last.t).toLocaleDateString('ja-JP')}</div><div class="timer" style="font-size:1.4rem;margin:4px 0 8px">総合${last.tot}%</div>${FIELDS.filter(F=>last.f[F.k]!=null).map(F=>`<div class="catrow"><span class="nm">${esc(F.name)}</span><span class="pc">${last.f[F.k]}%</span><div class="meter"><i class="${last.f[F.k]<70?'low':''}" style="width:${last.f[F.k]}%"></i></div></div>`).join('')}<div class="actions" style="margin-top:8px"><button class="btn ghost sm" data-act="gomock">実力診断を受ける</button></div></div>`:''}
   ${badgesHTML()}
   <h2>復習の予定</h2>
   <div class="kpis"><div class="panel kpi"><div class="lbl">今日の復習</div><div class="v" style="color:${sr.due?'var(--ng)':'var(--ok)'}">${sr.due}<small>問</small></div></div><div class="panel kpi"><div class="lbl">明日</div><div class="v">${sr.tom}<small>問</small></div></div><div class="panel kpi"><div class="lbl">定着</div><div class="v" style="color:var(--ok)">${sr.firm}<small>問</small></div></div></div>
-  <p class="note" style="margin-inline:4px">正解するたびに次の出題までの間隔が延びます（1日→3日→7日→…）。間違えると今日の復習に戻ります。間隔が21日以上になった問題を「定着」として数えています（学習中 ${sr.learn} 問）。</p>
-  <h2>正答率の推移</h2><div class="panel chart">${trendSVG()}<p class="note">演習1回ごとの正答率を p 管理図の形で表示。中心線は全体の平均正答率、破線は ±3σ の管理限界（回ごとの問題数で変わる）。</p></div>
+  <p class="note" style="margin-inline:4px">正解するたびに次の出題までの間隔が延びます（1日→3日→7日→…）。間違えると今日の復習に戻ります。間隔が21日以上になった問題を「定着」として数えています（学習中${sr.learn}問）。</p>
+  <h2>正答率の推移</h2><div class="panel chart">${trendSVG()}<p class="note">演習1回ごとの正答率をp管理図の形で表示。中心線は全体の平均正答率、破線は ±3σの管理限界（回ごとの問題数で変わる）。</p></div>
   <p class="note" style="margin:16px 4px"><button class="linkbtn" data-v2="data">記録の書き出し・読み込み・リセット、報告した誤り</button>（設定からも開けます）</p>`;
 }
 // 記録の管理：書き出し・読み込み・リセット・報告した誤りの一覧（設定と成績の下から開く）
@@ -1474,14 +1474,14 @@ function refLine(cat){
 function resHTML(){
   const n={k:KB.length,g:Object.keys(G).length,x:ITEMS.filter(i=>i.kind==='x').length,s:DAI.length};
   const sec=RES_LINKS.map(g=>`<h2>${esc(g.h)}</h2>${g.note?`<p class="note" style="margin-top:0">${esc(g.note)}</p>`:''}<div class="panel links">${g.items.map(([t,u,d])=>`<div class="lnk">${A(t,u)}${d?`<span>${esc(d)}</span>`:''}</div>`).join('')}</div>`).join('');
-  const refs=Object.entries(CATS).map(([k,c])=>`<div class="refrow" id="res-${k}"><div class="nm"><span class="lbl">${esc(c.field)}</span>${esc(c.name)}</div><div>${(REFS[k]||[]).length?REFS[k].map(([no,t])=>`<div><b class="jis">${esc(no)}</b> ${esc(t)}</div>`).join(''):'<div class="note" style="margin:0">対応する JIS はありません。レベル表と4級用テキストを参照してください。</div>'}</div></div>`).join('');
+  const refs=Object.entries(CATS).map(([k,c])=>`<div class="refrow" id="res-${k}"><div class="nm"><span class="lbl">${esc(c.field)}</span>${esc(c.name)}</div><div>${(REFS[k]||[]).length?REFS[k].map(([no,t])=>`<div><b class="jis">${esc(no)}</b> ${esc(t)}</div>`).join(''):'<div class="note" style="margin:0">対応するJISはありません。レベル表と4級用テキストを参照してください。</div>'}</div></div>`).join('');
   return `<details class="panel sylwrap"><summary><b>出題範囲との対応</b><span class="note" style="margin:0">${SYLX.length}項目・項目ごとの問題数と正答率</span></summary>
-  <p class="note">作成者が JIS の幾何公差関連規格をもとに決めた出題範囲（${SYL_VER}）の項目と、収録問題数・あなたの正答率です。「演習」でその項目だけを出題します。</p>
+  <p class="note">作成者がJISの幾何公差関連規格をもとに決めた出題範囲（${SYL_VER}）の項目と、収録問題数・あなたの正答率です。「演習」でその項目だけを出題します。</p>
   <div class="syl">${sylHTML()}</div></details>
   ${sec}
   <h2>分野ごとの関連規格</h2>
   <div class="panel">${refs}</div>
-  <p class="note">規格の番号と名称は作成者の知識に基づきます。改正されている場合があるので、JIS 検索で最新版を確認してください。</p>
+  <p class="note">規格の番号と名称は作成者の知識に基づきます。改正されている場合があるので、JIS検索で最新版を確認してください。</p>
   <p class="note">このアプリの版・更新履歴・非公式であることの説明は、右上の「設定」にあります。</p>`;
 }
 // レベル表の大項目ごとに折りたたみ、項目ごとに問題数・正答率・演習ボタンを出す
@@ -1564,8 +1564,8 @@ $('#main').addEventListener('click',e=>{
   if(d.rpdel!=null){P.reports.splice(+d.rpdel,1);persist();render();return;}
   switch(d.act){
     case 'godrill':practiceSub='drill';setView('drill');break;
-    case 'qk':startQuiz(buildList(ITEMS.filter(i=>i.kind==='k'),10,true),'知識 10問');break;
-    case 'qg':startQuiz(buildList(ITEMS.filter(i=>i.kind==='g'&&!G[i.id].judge),10,false),'計算 10問');break;
+    case 'qk':startQuiz(buildList(ITEMS.filter(i=>i.kind==='k'),10,true),'知識10問');break;
+    case 'qg':startQuiz(buildList(ITEMS.filter(i=>i.kind==='g'&&!G[i.id].judge),10,false),'計算10問');break;
     case 'quick':startQuiz(mixReview(buildList(ITEMS.filter(i=>i.kind!=='x'),10,false),3),'全分野10問');break;
     case 'review':startReview();break;
     case 'marks':startMarks();break;
@@ -1838,8 +1838,8 @@ function hlCell(f){
   else if(f.r>=0){const tr=tb.querySelectorAll('tbody tr')[f.r];if(tr){tr.classList.add('hlrow');if(f.c>=0)cell=tr.querySelectorAll('td')[f.c];}}
   if(cell){cell.classList.add('hl');cell.scrollIntoView({block:'center',inline:'center'});}
 }
-function celebrateGoal(){setTimeout(()=>{toast(`今日の目標達成！ 連続 ${streakInfo().cur} 日`);sfx('goal');confetti();},450);}
-const PRAISE=['正解！','いいですね！','その調子！','完璧です','よくできました'];
+function celebrateGoal(){setTimeout(()=>{toast(`今日の目標達成。連続${streakInfo().cur}日`);sfx('goal');confetti();},450);}
+const PRAISE=['正解','いいですね','その調子','完璧です','よくできました'];
 const pickPraise=()=>PRAISE[Math.floor(Math.random()*PRAISE.length)];
 // ===== 設定（音・テーマ・文字サイズは端末ごと、1日の目標は記録と一緒に保存） =====
 let fontScale='1';try{fontScale=localStorage.getItem('gdt-fs')||'1';}catch(e){}
@@ -1874,19 +1874,19 @@ function settingsHTML(){
   <div class="setcard"><h3>通知</h3>
     ${app?`<div class="srow"><div class="t"><b>毎日のリマインダー</b><span>指定した時刻に、今日の目標が終わっていなければ通知します</span></div>${sw('remind',rc.on,'毎日のリマインダー')}</div>
     ${rc.on?`<div class="srow"><div class="t"><b>通知する時刻</b></div><input type="time" id="remTime" value="${pad(rc.h)}:${pad(rc.m)}" aria-label="通知する時刻"></div>
-    ${allowed?`<div class="srow"><div class="t"><span>数分ほど遅れて届くことがあります。</span></div><button class="btn ghost sm" data-test-notify>テスト通知</button></div>`:`<div class="srow"><div class="t"><b style="color:var(--ng)">通知が許可されていません</b><span>Android の「設定 → アプリ → 幾何公差ドリル → 通知」で許可してください。</span></div></div>`}`:''}`
-    :`<div class="srow"><div class="t"><b>毎日のリマインダー</b><span>Android アプリ版で使えます。Web 版では通知を送れません。</span></div></div>`}
+    ${allowed?`<div class="srow"><div class="t"><span>数分ほど遅れて届くことがあります。</span></div><button class="btn ghost sm" data-test-notify>テスト通知</button></div>`:`<div class="srow"><div class="t"><b style="color:var(--ng)">通知が許可されていません</b><span>Androidの「設定 → アプリ → 幾何公差ドリル → 通知」で許可してください。</span></div></div>`}`:''}`
+    :`<div class="srow"><div class="t"><b>毎日のリマインダー</b><span>Androidアプリ版で使えます。Web版では通知を送れません。</span></div></div>`}
   </div>
   <div class="setcard"><h3>記録</h3>
     <div class="srow"><div class="t"><b>記録の管理</b><span>書き出し・読み込み（機種変更）、リセット、報告した誤りの一覧</span></div><button class="btn ghost sm" data-godata>開く</button></div>
   </div>
   <div class="setcard"><h3>このアプリについて</h3>
     <div class="srow"><div class="t"><b>はじめの案内</b><span>初回起動時の設定（目標・表示・通知）をもう一度行う</span></div><button class="btn ghost sm" data-reonb>表示する</button></div>
-    <p class="note" style="margin:6px 0">知識問題 ${KB.length} 問、計算・判定問題 ${Object.keys(G).length} 種（毎回数値が変わる）、大問 ${DAI.length} 題。個人が作成した非公式の学習教材で、日本規格協会・ISO・ASME とは関係ありません。問題・解説・図はすべてオリジナルで、規格の本文や図は転載していません。</p>
+    <p class="note" style="margin:6px 0">知識問題${KB.length}問、計算・判定問題${Object.keys(G).length}種（毎回数値が変わる）、大問${DAI.length}題。個人が作成した非公式の学習教材で、日本規格協会・ISO・ASMEとは関係ありません。問題・解説・図はすべてオリジナルで、規格の本文や図は転載していません。</p>
     ${pwaRow()}
-    <div class="srow"><div class="t"><b>バージョン</b><span>${APP.date} 更新</span></div><span class="ver-big" style="font-size:1.1rem">v${APP.version}</span></div>
+    <div class="srow"><div class="t"><b>バージョン</b><span>${APP.date}更新</span></div><span class="ver-big" style="font-size:1.1rem">v${APP.version}</span></div>
     <div class="srow"><div class="t"><b>更新の確認</b><span id="updState">${updHTML()}</span></div><button class="btn ghost sm" data-upd>確認する</button></div>
-    <div class="srow"><div class="t"><b>GitHub のページ</b><span>使い方・変更内容・不具合の報告</span></div><a class="btn ghost sm" href="${REPO.page}" target="_blank" rel="noopener">開く</a></div>
+    <div class="srow"><div class="t"><b>GitHubのページ</b><span>使い方・変更内容・不具合の報告</span></div><a class="btn ghost sm" href="${REPO.page}" target="_blank" rel="noopener">開く</a></div>
     <div class="srow"><div class="t"><b>QC Workbench</b><span>工程能力・抜取検査・公差積み上げの計算ツールなど、ほかのツールの一覧</span></div><a class="btn ghost sm" href="https://kotaooka.github.io/" target="_blank" rel="noopener">開く</a></div>
     <div style="padding:6px 0 10px">${H.slice(0,3).map(([v,d,t])=>`<div class="hist"><b>v${v}</b><span class="d">${d}</span><span>${esc(t)}</span></div>`).join('')}
     ${H.length>3?`<details class="oldhist"><summary>以前の変更（${H.length-3}件）</summary>${H.slice(3).map(([v,d,t])=>`<div class="hist"><b>v${v}</b><span class="d">${d}</span><span>${esc(t)}</span></div>`).join('')}</details>`:''}</div>
@@ -1906,7 +1906,7 @@ function pwaRow(){
   const t='<div class="t"><b>ホーム画面に追加</b><span>';
   if(isStandalone())return `<div class="srow">${t}ホーム画面から起動しています。一度開いたあとは、通信がなくても使えます。</span></div></div>`;
   if(instEvt)return `<div class="srow">${t}アプリのように起動でき、通信がなくても使えます</span></div><button class="btn ghost sm" data-install>追加する</button></div>`;
-  if(isIOS())return `<div class="srow">${t}Safari の共有ボタン（□に↑）→「ホーム画面に追加」を選ぶと、アプリのように起動でき、通信がなくても使えます。</span></div></div>`;
+  if(isIOS())return `<div class="srow">${t}Safariの共有ボタン（□に↑）→「ホーム画面に追加」を選ぶと、アプリのように起動でき、通信がなくても使えます。</span></div></div>`;
   return `<div class="srow">${t}ブラウザのメニューから「ホーム画面に追加」または「インストール」を選ぶと、アプリのように起動でき、通信がなくても使えます。</span></div></div>`;
 }
 
@@ -1919,19 +1919,19 @@ function cmpVer(a,b){const x=String(a).replace(/^v/,'').split('.').map(Number),y
 function updHTML(){
   if(upd.st==='busy')return '確認しています…';
   if(upd.st==='err')return `<b style="color:var(--ng)">確認できませんでした</b>（${esc(upd.msg)}）`;
-  if(upd.st==='latest')return `最新版です（v${esc(upd.ver)}・${esc(upd.date)} 公開）`;
+  if(upd.st==='latest')return `最新版です（v${esc(upd.ver)}・${esc(upd.date)}公開）`;
   if(upd.st==='new'){
-    const how=APPB()?`<a href="${esc(upd.apk||upd.url)}" target="_blank" rel="noopener">新しい APK をダウンロード</a>。ダウンロードしたファイルを開いて上書きインストールすると、解答記録はそのまま残ります。`
+    const how=APPB()?`<a href="${esc(upd.apk||upd.url)}" target="_blank" rel="noopener">新しいAPKをダウンロード</a>。ダウンロードしたファイルを開いて上書きインストールすると、解答記録はそのまま残ります。`
       :`<a href="#" data-reload>再読み込み</a>すると新しい版になります。`;
-    return `<b style="color:var(--ok)">v${esc(upd.ver)} があります</b>（${esc(upd.date)} 公開）。${how}`;}
-  return 'GitHub で最新版を確認します（通信します）';
+    return `<b style="color:var(--ok)">v${esc(upd.ver)}があります</b>（${esc(upd.date)}公開）。${how}`;}
+  return 'GitHubで最新版を確認します（通信します）';
 }
 async function checkUpdate(){
   upd={st:'busy'};const el=()=>$('#updState');if(el())el().innerHTML=updHTML();
   try{
     const r=await fetch(REPO.api,{cache:'no-store',headers:{Accept:'application/vnd.github+json'}});
     if(r.status===403||r.status===429)throw new Error('確認の回数が多すぎます。1時間ほどおいてください');
-    if(!r.ok)throw new Error('サーバーの応答 '+r.status);
+    if(!r.ok)throw new Error('サーバーの応答'+r.status);
     const j=await r.json(),ver=String(j.tag_name||'').replace(/^v/,'');
     if(!/^\d+(\.\d+)*$/.test(ver))throw new Error('版名を読み取れません');
     const apk=(j.assets||[]).find(a=>/\.apk$/i.test(a.name));
@@ -1966,7 +1966,7 @@ $('#setSheet').addEventListener('click',e=>{
   if(k==='goal'){P.goal=+v;persist();}
   sfx('tap');refreshSettings();});
 $('#setSheet').addEventListener('change',e=>{
-  if(e.target.id==='remTime'){const [h,m]=e.target.value.split(':').map(Number);const c=remindCfg();c.h=h||0;c.m=m||0;saveRemind(c);toast(`毎日 ${e.target.value} に通知します`);}
+  if(e.target.id==='remTime'){const [h,m]=e.target.value.split(':').map(Number);const c=remindCfg();c.h=h||0;c.m=m||0;saveRemind(c);toast(`毎日${e.target.value}に通知します`);}
 });
 document.addEventListener('keydown',e=>{if(e.key==='Escape'&&sheetOpen())closeSheets();});
 function syncSoundBtn(){}
