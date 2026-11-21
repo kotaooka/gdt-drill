@@ -27,7 +27,7 @@ jobs:
         with:
           gradle-version: "8.9"
 
-      # 署名鍵は Secrets に入れておく（README「自動ビルドの署名設定」を参照）
+      # 署名鍵は Secrets に入れておく（DEVELOPMENT.md の「署名の設定」を参照）
       - name: 署名鍵を復元
         env:
           KEYSTORE_BASE64: ${{ secrets.KEYSTORE_BASE64 }}
