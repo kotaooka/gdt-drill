@@ -6,7 +6,7 @@
 
 画面・問題・数値表は `src/` に分かれており、`tools/build.py` で1つの HTML（`docs/index.html`）にまとめます。この HTML が Web 版（GitHub Pages）で、Android アプリにも同梱されます。画面側は外部ライブラリを使わず、解答記録は端末内（localStorage）だけに保存します。外部と通信するのは、設定の「更新の確認」で GitHub の API（最新リリースの版名）を読むときだけです（「GitHub で報告」や各種リンクは、ブラウザで GitHub などのページを開くだけです）。
 
-Web 版は `docs/sw.js`（Service Worker）で、一度開いたあとはオフラインでも起動できます。ページ本体は通信を優先して取得するので、`docs/index.html` を更新しても `sw.js` を書き換える必要はありません。保存するファイルを増やしたときや、アイコンなど保存済みのファイルを差し替えたときだけ、`sw.js` の `CORE` と `CACHE` の名前（いまは `gdt-drill-v2`。変えるときは `v3` に）を変えてください。Android アプリでは Service Worker を登録しません。
+Web 版は `docs/sw.js`（Service Worker）で、一度開いたあとはオフラインでも起動できます。ページ本体は通信を優先して取得します。Android アプリでは Service Worker を登録しません。
 
 ```
 src/
