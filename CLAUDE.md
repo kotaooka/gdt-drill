@@ -21,11 +21,13 @@ python tools/build.py && git diff --exit-code docs/index.html
 node tests/test.js
 python tests/verify.py
 ```
+- push の前に `/verify` を実行する（上の検査に加え、docs/sw.js の更新漏れと README の記載もまとめて確かめる）。
 - `git diff --exit-code` は埋め込みが最新かの確認。`python tools/build.py` で差分が出たら、その結果をコミットに含める。
 
 ## 検算の原則
 - 期待値は規格の表・公表資料・独立した実装（`tests/make_reference.py` など）の値にする。Claude 自身が計算した値を期待値にしない。
 - テストを通すために期待値・許容差を緩めたり、テストを消したり飛ばしたりしない。合わないときは原因を調べ、直せなければ報告する。
+- 計算・規格の表・期待値を変えたら、push の前に `standard-checker` サブエージェントに照合させる。
 
 ## 公開ファイルを更新したとき
 - `src/` を変えたら `python tools/build.py` で `docs/index.html` を作り直す。
